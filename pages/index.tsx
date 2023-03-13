@@ -2,6 +2,7 @@ import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
 import { GetStaticProps } from "next"
 import axios from "axios"
+import { usePhotosQuery } from "../services/PostService";
 
 interface SubCategories {
   id: number
@@ -83,6 +84,12 @@ export const getStaticProps: GetStaticProps = async () => {
 function Index(props) {
   console.log("Пропсы", props)
 
+  // const {data: posts} = postAPI.
+  const {data, isLoading, error} = usePhotosQuery(10)
+  console.log('>>>', isLoading)
+  console.log('>>>', data)
+  console.log('>>>', error)
+
   const buildCategoriesWithSubCategories = () => {
     return (
       <ul>
@@ -114,6 +121,7 @@ function Index(props) {
       <div className="bg-pink-100">
         <div>Home index.tsx</div>
         {buildCategoriesWithSubCategories()}
+        <div>---------------</div>
       </div>
     </>
   )
