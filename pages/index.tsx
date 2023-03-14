@@ -2,7 +2,8 @@ import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
 import { GetStaticProps } from "next"
 import axios from "axios"
-import { usePhotosQuery } from "../services/PostService";
+// import { usePhotosQuery } from "../services/PostService";
+import { photosApi } from "../services/PostService"
 
 interface SubCategories {
   id: number
@@ -27,7 +28,6 @@ function delay(ms: number): Promise<number> {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-
   let getAPICategories = await delay(700).then(() => {
     return [
       {
@@ -82,20 +82,16 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 function Index(props) {
-  console.log("Пропсы", props)
+  // console.log("Пропсы", props)
 
-  // const {data: posts} = postAPI.
-  const {data, isLoading, error} = usePhotosQuery(10)
-  console.log('>>>', isLoading)
-  console.log('>>>', data)
-  console.log('>>>', error)
+  const { data, isLoading, error } = photosApi.usePhotosQuery(7)
 
   const buildCategoriesWithSubCategories = () => {
     return (
       <ul>
         {props.categories.map(category => (
           <li key={category.id} className="Category">
-            <span className='text-amber-700'>{category.name}</span>
+            <span className="text-amber-700">{category.name}</span>
             <ul>
               {category.subCategories &&
                 category.subCategories.map(subCategory => (

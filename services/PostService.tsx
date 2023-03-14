@@ -27,7 +27,7 @@ export const photosApi = createApi({
   }),
 });
 
-export const { usePhotosQuery } = photosApi;
+// export const { usePhotosQuery } = photosApi;
 
 
 
