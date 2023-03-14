@@ -4,6 +4,7 @@ import { GetStaticProps } from "next"
 import axios from "axios"
 // import { usePhotosQuery } from "../services/PostService";
 import { photosApi } from "../services/PostService"
+import { wrapper } from "../store/store"
 
 interface SubCategories {
   id: number
@@ -27,59 +28,63 @@ function delay(ms: number): Promise<number> {
   })
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  let getAPICategories = await delay(700).then(() => {
-    return [
-      {
-        name: "Одежда",
-        id: 1,
-        subCategories: [
-          {
-            name: "Джинсы",
-            id: 1
-          },
-          {
-            name: "Рубашки",
-            id: 2
-          }
-        ]
-      },
-      {
-        name: "Обувь",
-        id: 2,
-        subCategories: [
-          {
-            name: "Кроссовки",
-            id: 1
-          },
-          {
-            name: "Ботинки",
-            id: 2
-          }
-        ]
-      },
-      {
-        name: "Аксессуары",
-        id: 3
-      },
-      {
-        name: "Дом",
-        id: 4
+export const getStaticProps: GetStaticProps = wrapper.getStaticProps(
+  store => async ctx => {
+    console.log(store)
+    let getAPICategories = await delay(700).then(() => {
+      return [
+        {
+          name: "Одежда",
+          id: 1,
+          subCategories: [
+            {
+              name: "Джинсы",
+              id: 1
+            },
+            {
+              name: "Рубашки",
+              id: 2
+            }
+          ]
+        },
+        {
+          name: "Обувь",
+          id: 2,
+          subCategories: [
+            {
+              name: "Кроссовки",
+              id: 1
+            },
+            {
+              name: "Ботинки",
+              id: 2
+            }
+          ]
+        },
+        {
+          name: "Аксессуары",
+          id: 3
+        },
+        {
+          name: "Дом",
+          id: 4
+        }
+      ]
+    })
+
+    let getAPIBrands = await delay(700).then(() => {
+      return ["Найк", "Адидас"]
+    })
+
+    return {
+      props: {
+        categories: getAPICategories,
+        popularBrands: getAPIBrands
       }
-    ]
-  })
-
-  let getAPIBrands = await delay(700).then(() => {
-    return ["Найк", "Адидас"]
-  })
-
-  return {
-    props: {
-      categories: getAPICategories,
-      popularBrands: getAPIBrands
     }
+
   }
-}
+)
 
 function Index(props) {
   // console.log("Пропсы", props)
