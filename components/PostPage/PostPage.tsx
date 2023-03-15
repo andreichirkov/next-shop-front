@@ -1,12 +1,12 @@
 import { useRouter } from "next/router"
 import Post from "../Post/Post"
-import { usePost } from "../../hooks/api/posts"
+import { usePostQuery } from "../../hooks/api/posts"
 
 const PostPage = () => {
   const router = useRouter()
   const id = router.query.id
 
-  const { data, isLoading } = usePost(id)
+  const { data, isLoading } = usePostQuery(id)
 
   if (isLoading) return <h1 className="text-9xl">Загрузка !!!</h1>
 

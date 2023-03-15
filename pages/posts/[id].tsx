@@ -1,14 +1,17 @@
 import { dehydrate, QueryClient } from "react-query"
 import Error from "../../components/Error/Error"
 import PostPage from "../../components/PostPage/PostPage"
-import { getPost } from "../../api/posts"
+
 import { withCSR } from "../../HOC/with-CSR"
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import Link from "next/link"
+import { getPost } from "../../api/posts"
 
 const Page = props => {
+  // Если ошибка в базовом запроссе из getServerSideProps
   if (props.isError) return <Error />
 
+  // Если ошибки нет данные ПРЕФЕТЧАСТСЯ на этот запрос
   return (
     <>
       <Link href={"/"}>На главную</Link>
@@ -27,8 +30,14 @@ export const getServerSideProps = withCSR(async ctx => {
   let isError = false
 
   try {
-    await queryClient.fetchQuery(["post", id], () => getPost(id))
+    // ❤ Делает запрос и кэширует query ❤
+    // Если запрос существует и данные не признаны недействительными
+    // или старше заданного staleTime, то будут возвращены данные из кеша.
+    // В противном случае он попытается получить последние данные.
+    await queryClient.prefetchQuery(["post", id], () => getPost(id))
   } catch (error) {
+    // Если ошибка на уровне страницы с id-постом то показываем компонент Error
+    // fetchQuery выкинул throw with the error (из документации)
     isError = true
     // @ts-ignore
     ctx.res.statusCode = error.response.status
