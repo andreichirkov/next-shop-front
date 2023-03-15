@@ -1,116 +1,9 @@
 import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
-import { GetStaticProps } from "next"
-import axios from "axios"
-// import { usePhotosQuery } from "../services/PostService";
-import { photosApi } from "../services/PostService"
-import { wrapper } from "../store/store"
+import Posts from "../components/Posts/Posts";
 
-interface SubCategories {
-  id: number
-  name: string
-}
 
-interface Category {
-  id: number
-  name: string
-  subCategories: SubCategories[]
-}
-
-interface HomeProps extends Record<string, unknown> {
-  categories: Category[]
-  popularBrands: string[]
-}
-
-function delay(ms: number): Promise<number> {
-  return new Promise((resolve, reject) => {
-    setTimeout(resolve, ms)
-  })
-}
-
-export const getStaticProps: GetStaticProps = wrapper.getStaticProps(
-  store => async ctx => {
-    console.log(store)
-    let getAPICategories = await delay(700).then(() => {
-      return [
-        {
-          name: "Одежда",
-          id: 1,
-          subCategories: [
-            {
-              name: "Джинсы",
-              id: 1
-            },
-            {
-              name: "Рубашки",
-              id: 2
-            }
-          ]
-        },
-        {
-          name: "Обувь",
-          id: 2,
-          subCategories: [
-            {
-              name: "Кроссовки",
-              id: 1
-            },
-            {
-              name: "Ботинки",
-              id: 2
-            }
-          ]
-        },
-        {
-          name: "Аксессуары",
-          id: 3
-        },
-        {
-          name: "Дом",
-          id: 4
-        }
-      ]
-    })
-
-    let getAPIBrands = await delay(700).then(() => {
-      return ["Найк", "Адидас"]
-    })
-
-    return {
-      props: {
-        categories: getAPICategories,
-        popularBrands: getAPIBrands
-      }
-    }
-
-  }
-)
-
-function Index(props) {
-  // console.log("Пропсы", props)
-
-  const { data, isLoading, error } = photosApi.usePhotosQuery(7)
-
-  const buildCategoriesWithSubCategories = () => {
-    return (
-      <ul>
-        {props.categories.map(category => (
-          <li key={category.id} className="Category">
-            <span className="text-amber-700">{category.name}</span>
-            <ul>
-              {category.subCategories &&
-                category.subCategories.map(subCategory => (
-                  <li className="SubCategory" key={subCategory.id}>
-                    {subCategory.name}
-                  </li>
-                ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
-    )
-  }
-
+function Index() {
   return (
     <>
       <Head>
@@ -119,10 +12,9 @@ function Index(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-pink-100">
-        <div>Home index.tsx</div>
-        {buildCategoriesWithSubCategories()}
-        <div>---------------</div>
+      <div className="bg-pink-100 h-screen">
+        <div className='text-2xl text-center mb-4'>Home index.tsx</div>
+        <Posts />
       </div>
     </>
   )

@@ -1,14 +1,19 @@
 import "../styles/globals.scss"
 import type { AppProps } from "next/app"
-import { Provider } from "react-redux"
-import { wrapper } from "../store/store"
+import { QueryClientProvider, QueryClient, Hydrate } from "react-query"
+import { ReactQueryDevtools } from "react-query/devtools"
+import { useState } from "react"
+import { config } from "../lib/react-query-config"
 
-export default function App({ Component, ...rest }: AppProps) {
-  const { store, props } = wrapper.useWrappedStore(rest)
+export default function App({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient(config))
 
   return (
-    <Provider store={store}>
-      <Component {...props.pageProps} />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <Component {...pageProps} />
+        <ReactQueryDevtools />
+      </Hydrate>
+    </QueryClientProvider>
   )
 }
