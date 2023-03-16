@@ -7,6 +7,7 @@ const PostPage = () => {
   const id = router.query.id
 
   const { data, isLoading } = usePostQuery(id)
+  console.log('time')
 
   if (isLoading) return <h1 className="text-9xl">Загрузка !!!</h1>
 

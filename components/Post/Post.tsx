@@ -6,6 +6,7 @@ function Post({ id, title, body }) {
         <h2>Айди: {id}</h2>
       </div>
       <p>Текст Боди: {body}</p>
+      <button className='border border-emerald-600 p-2'>Like</button>
     </div>
   )
 }
