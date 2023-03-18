@@ -7,13 +7,13 @@ const PostPage = () => {
   const id = router.query.id
 
   const { data, isLoading } = usePostQuery(id)
-  console.log('time')
+  console.log("PostPage component fn")
 
   if (isLoading) return <h1 className="text-9xl">Загрузка !!!</h1>
 
   return (
     <div>
-      <Post id={data.id} title={data.title} body={data.body} />
+      {data && <Post id={data.id} title={data.title} body={data.body} />}
       <div>{/*<Pagination id={id} />*/}</div>
     </div>
   )

@@ -1,9 +1,36 @@
 import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
-import Posts from "../components/Posts/Posts";
+import Posts from "../components/Posts/Posts"
+import {dehydrate, QueryClient} from "react-query"
+import { getPosts } from "../api/posts"
+import Error from "../components/Error/Error";
 
+const getStaticProps = async ctx => {
+  console.log("getStaticProps => ctx =>", ctx)
+  let isError = false
+  const queryClient = new QueryClient()
 
-function Index() {
+  try {
+    await queryClient.prefetchQuery("list_of_posts", () => getPosts())
+  } catch (error) {
+    isError = true
+    // @ts-ignore
+    ctx.res.statusCode = error.response.status
+  }
+
+  return {
+    props: {
+      //also passing down isError state to show a custom error component.
+      isError,
+      dehydratedState: dehydrate(queryClient)
+    }
+  }
+}
+
+function Index(props) {
+  // Если ошибка в базовом запроссе из getServerSideProps
+  if (props.isError) return <Error />
+
   return (
     <>
       <Head>
@@ -13,7 +40,7 @@ function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="bg-pink-100 h-screen">
-        <div className='text-2xl text-center mb-4'>Home index.tsx</div>
+        <div className="text-2xl text-center mb-4">Home index.tsx</div>
         <Posts />
       </div>
     </>

@@ -1,32 +1,16 @@
 import { dehydrate, QueryClient } from "react-query"
 import Error from "../../components/Error/Error"
 import PostPage from "../../components/PostPage/PostPage"
-
 import { withCSR } from "../../HOC/with-CSR"
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import Link from "next/link"
 import { getPost } from "../../api/posts"
 
-const Page = props => {
-  // Если ошибка в базовом запроссе из getServerSideProps
-  if (props.isError) return <Error />
-
-  // Если ошибки нет данные ПРЕФЕТЧАСТСЯ на этот запрос
-  return (
-    <>
-      <Link href={"/"}>На главную</Link>
-      <PostPage />
-    </>
-  )
-}
-
 export const getServerSideProps = withCSR(async ctx => {
   console.log("getServerSideProps => ctx =>", ctx)
 
   const { id } = ctx.params
-
   const queryClient = new QueryClient()
-
   let isError = false
 
   try {
@@ -51,5 +35,18 @@ export const getServerSideProps = withCSR(async ctx => {
     }
   }
 })
+
+const Page = props => {
+  // Если ошибка в базовом запроссе из getServerSideProps
+  if (props.isError) return <Error />
+
+  // Если ошибки нет данные ПРЕФЕТЧАСТСЯ на этот запрос
+  return (
+    <>
+      <Link href={"/"}>На главную</Link>
+      <PostPage />
+    </>
+  )
+}
 
 export default withLayoutMain(Page)
