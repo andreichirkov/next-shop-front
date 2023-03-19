@@ -2,10 +2,21 @@ const plugin = require("tailwindcss/plugin")
 
 module.exports = {
   content: [
+    "./layouts/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
+    container: {
+      center: true,
+      screens: {
+        // sm: "100%",
+        // md: "100%",
+        // lg: "1024px",
+        // xl: "1280px"
+        '2xl': '1600px'
+      }
+    },
     extend: {
       fontSize: {
         xxs: "0.5rem"
