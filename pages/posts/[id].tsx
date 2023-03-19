@@ -4,7 +4,7 @@ import PostPage from "../../components/PostPage/PostPage"
 import { withCSR } from "../../HOC/with-CSR"
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import Link from "next/link"
-import { getPost } from "../../api/posts"
+import { fetchPost } from "../../api/posts"
 
 export const getServerSideProps = withCSR(async ctx => {
   console.log("getServerSideProps => ctx =>", ctx)
@@ -18,7 +18,7 @@ export const getServerSideProps = withCSR(async ctx => {
     // Если запрос существует и данные не признаны недействительными
     // или старше заданного staleTime, то будут возвращены данные из кеша.
     // В противном случае он попытается получить последние данные.
-    await queryClient.prefetchQuery(["post", id], () => getPost(id))
+    await queryClient.prefetchQuery(["post", id], () => fetchPost(id))
   } catch (error) {
     // Если ошибка на уровне страницы с id-постом то показываем компонент Error
     // fetchQuery выкинул throw with the error (из документации)

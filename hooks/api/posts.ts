@@ -1,18 +1,18 @@
 import { useQuery } from "react-query"
-import { getPost, getPosts } from "../../api/posts"
+import { fetchPost, fetchPosts } from "../../api/posts"
 
-export const usePostQuery = id => {
-  return useQuery(["post", id], () => getPost(id), {
+export const usePostsQuery = () => {
+  return useQuery("posts", fetchPosts, {
     onSuccess: data => {
-      console.log("onSuccess in usePostQuery -->", data)
+      console.log("onSuccess in usePostsQuery -->", data)
     }
   })
 }
 
-export const usePostsQuery = () => {
-  return useQuery("list_of_posts", getPosts, {
+export const usePostQuery = id => {
+  return useQuery(["post", id], () => fetchPost(id), {
     onSuccess: data => {
-      console.log("onSuccess in usePostsQuery -->", data)
+      console.log("onSuccess in usePostQuery -->", data)
     }
   })
 }

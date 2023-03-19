@@ -1,9 +1,9 @@
 import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
 import Posts from "../components/Posts/Posts"
-import {dehydrate, QueryClient} from "react-query"
-import { getPosts } from "../api/posts"
-import Error from "../components/Error/Error";
+import { dehydrate, QueryClient, useQuery } from "react-query"
+import { fetchPosts } from "../api/posts"
+import Error from "../components/Error/Error"
 
 const getStaticProps = async ctx => {
   console.log("getStaticProps => ctx =>", ctx)
@@ -11,7 +11,7 @@ const getStaticProps = async ctx => {
   const queryClient = new QueryClient()
 
   try {
-    await queryClient.prefetchQuery("list_of_posts", () => getPosts())
+   await queryClient.prefetchQuery(["posts"], fetchPosts)
   } catch (error) {
     isError = true
     // @ts-ignore

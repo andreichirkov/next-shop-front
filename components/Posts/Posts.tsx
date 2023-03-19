@@ -8,7 +8,7 @@ export default function Posts() {
   const { data: posts, isLoading } = usePostsQuery()
 
   const { favoriteIds } = useFavoritePostsStore()
-  console.log("favoriteIds", favoriteIds)
+  // console.log("favoriteIds", favoriteIds)
 
   //Функции достаются отдельно, чтобы не было Ре-Рендера
   const addToFavorite = useFavoritePostsStore(state => state.addToFavorite)
@@ -30,7 +30,7 @@ export default function Posts() {
   if (isLoading) return <h1 className="text-9xl">Загрузка !!!</h1>
 
   return (
-    <div className="flex justify-between px-40">
+    <div className="Posts.tsx flex justify-between flex-wrap px-40">
       {posts?.map(post => (
         <div key={post.id} className="flex flex-col">
           <PostLink post={post} />
