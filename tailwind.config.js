@@ -1,4 +1,5 @@
 const plugin = require("tailwindcss/plugin")
+const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
   content: [
@@ -7,14 +8,30 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
+    fontFamily: {
+      //default font
+      sans: ["Montserrat", ...defaultTheme.fontFamily.sans],
+      //font can change by add class "font-poppins" on element
+      poppins: ["Poppins", ...defaultTheme.fontFamily.sans]
+    },
+    fontSize: {
+      // [fontSize, lineHeight]
+      xs: ['12px', '1.3'],
+      sm: ['14px', '1.3'],
+      base: ['16px', '1.3'],
+      lg: ['18px', '1.3'],
+      xl: ['20px', '1.3'],
+      '2xl': ['22px', '1.3'],
+    },
     container: {
       center: true,
+      //set up max-width restriction
       screens: {
         // sm: "100%",
         // md: "100%",
         // lg: "1024px",
         // xl: "1280px"
-        '2xl': '1600px'
+        "2xl": "1600px"
       }
     },
     extend: {
@@ -40,7 +57,7 @@ module.exports = {
     }
   },
   plugins: [
-    plugin(({ addComponents, theme, addUtilities }) => {
+    plugin(({ addComponents, addBase, addUtilities, theme }) => {
       addComponents({
         ".btn-primary": {
           color: "#FFF",
