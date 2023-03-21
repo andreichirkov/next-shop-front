@@ -1,9 +1,11 @@
 import { HeaderProps } from "./Header.props"
 import HeaderButton from "../../components/HeaderButton/HeaderButton"
 import HeaderLink from "../../components/HeaderLink/HeaderLink"
+import { useState } from "react"
+import cn from "classnames"
 
 export const Header = ({ ...props }: HeaderProps): JSX.Element => {
-  const menu = [
+  const menuFromBack = [
     {
       slug: "latest",
       name: "Поступления",
@@ -57,60 +59,79 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
         }
       ]
     }
-]
+  ]
+  const menuFront = menuFromBack.map(item => {
+    return { ...item, isOpened: false }
+  })
+
+  const [menuState, setMenuState] = useState(menuFront)
+
+  const openMenuItem = categorySlug => {
+    setMenuState &&
+      setMenuState(
+        menuState.map(m => ({ ...m, isOpened: m.slug === categorySlug }))
+      )
+  }
+
+  const closeAllMenu = () => {
+    setMenuState &&
+      setMenuState(menuState.map(m => ({ ...m, isOpened: false })))
+  }
 
   return (
-    <div className="MAIN flex gap-8">
-      {menu.map(item => (
-        <div>
-          <div className='text-2xl'>{item.name}</div>
-          <div className='flex'>
-            {item.table.map(column => (
-              <div className='1'>
-                <a className="block text-xl" href={column.heading.link}>
-                  {column.heading.name}
-                </a>
-                <div className='2'>
-                  {column.body.map(cell => (
-                    <a className="block" href={cell.link}>
-                      {cell.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <header {...props} className="bg-neutral-700 " data-component="Header">
-      <div className="container px-container flex items-center justify-between h-10  ">
+    <header
+      data-component="Header"
+      className="bg-neutral-700 relative"
+      onMouseLeave={() => closeAllMenu()}
+      {...props}>
+      <div
+        className="absolute top-0 left-0 w-full h-11"
+        data-component="BGForMouseLeaveHeader"></div>
+      <nav className="container px-container flex items-center justify-between h-10  ">
         <ul className="flex" data-section="Left">
-          <li className="relative flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 rounded-lg">
-            <HeaderLink>Поступления</HeaderLink>
-            <ul className='absolute top-[calc(100%+0.5rem)] bg-neutral-600 p-2 rounded-lg'>
-              <li className=''>Эта неделя</li>
-              <li>Этот месяц</li>
-            </ul>
-          </li>
-          <li className="flex cursor-pointer items-center ">
-            <HeaderButton>Мужское</HeaderButton>
-          </li>
-          <li className="flex cursor-pointer items-center ">
-            <HeaderButton>Женское</HeaderButton>
-          </li>
-          <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
-            <HeaderLink>Бренды</HeaderLink>
-          </li>
-          <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
-            <HeaderLink>Дом</HeaderLink>
-          </li>
+          {menuState.map((item, i) => (
+            <li className="relative" key={i} data-component="HeaderMenuItem">
+              <a
+                href={"#"}
+                onMouseOver={() => openMenuItem(item.slug)}
+                className="flex items-center text-white px-2 h-8 rounded-lg hover:bg-neutral-600">
+                {item.name}
+              </a>
+              <div
+                data-component="ModalMenuItem"
+                className={cn(
+                  "flex absolute top-[calc(100%+0.5rem)] bg-neutral-600 p-2 rounded-lg",
+                  {
+                    ["hidden"]: !item.isOpened
+                  }
+                )}>
+                {item.table.map((column, n) => (
+                  <div className="" key={n} data-component="ColumnMenuItem">
+                    <a
+                      data-component="ColumnMenuHeading"
+                      className="block text-white underline underline-offset-4"
+                      href={column.heading.link}>
+                      {column.heading.name}
+                    </a>
+                    <ul className="2" data-component="ColumnMenuList">
+                      {column.body.map((cell, j) => (
+                        <li key={j}>
+                          <a className="block text-white" href={cell.link}>
+                            {cell.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </li>
+          ))}
         </ul>
         <div className="flex" data-section="Center">
           LOGO
         </div>
-        <ul className="flex" data-section="Left">
+        <ul className="flex" data-section="Right">
           <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
             <HeaderButton>Поиск</HeaderButton>
           </li>
@@ -124,7 +145,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             <HeaderButton>Корзина | 0</HeaderButton>
           </li>
         </ul>
-      </div>
+      </nav>
     </header>
   )
 }
