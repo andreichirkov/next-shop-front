@@ -23,6 +23,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   interface MenuItem {
     slug: string
     name: string
+    isOpened?: boolean
     table: TableMenuItem[]
   }
 
@@ -81,20 +82,20 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       ]
     }
   ]
-  const menuFront = menuFromBack.map(item => {
+  const menuFront: MenuItem[] = menuFromBack.map(item => {
     return { ...item, isOpened: false }
   })
 
-  const [menuState, setMenuState] = useState(menuFront)
+  const [menuState, setMenuState] = useState<MenuItem[]>(menuFront)
 
-  const openMenuItem = categorySlug => {
+  const openMenuItem = (categorySlug: string): void => {
     setMenuState &&
       setMenuState(
         menuState.map(m => ({ ...m, isOpened: m.slug === categorySlug }))
       )
   }
 
-  const closeAllMenu = () => {
+  const closeAllMenu = (): void => {
     setMenuState &&
       setMenuState(menuState.map(m => ({ ...m, isOpened: false })))
   }
