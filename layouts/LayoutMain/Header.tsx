@@ -5,7 +5,28 @@ import { useState } from "react"
 import cn from "classnames"
 
 export const Header = ({ ...props }: HeaderProps): JSX.Element => {
-  const menuFromBack = [
+  interface HeadingItem {
+    name: string
+    link: string
+  }
+
+  interface BodyItem {
+    name: string
+    link: string
+  }
+
+  interface TableMenuItem {
+    heading: HeadingItem
+    body: BodyItem[]
+  }
+
+  interface MenuItem {
+    slug: string
+    name: string
+    table: TableMenuItem[]
+  }
+
+  const menuFromBack: MenuItem[] = [
     {
       slug: "latest",
       name: "Поступления",
