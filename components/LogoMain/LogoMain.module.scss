@@ -1,0 +1,27 @@
+@keyframes Gradient {
+  0% {
+    background-position: 0 50%
+  }
+  50% {
+    background-position: 100% 50%
+  }
+  100% {
+    background-position: 0 50%
+  }
+}
+
+.logo {
+  align-self: center;
+  text-transform: uppercase;
+  width: 220px;
+  font-size: 18px;
+  font-weight: 400;
+  padding: 0 2rem;
+  background: linear-gradient(-45deg,#990033, #ed4956, #ed4956, #339933, #fde910 , #EE7752, #E73C7E, #23A6D5, #6666FF, #23D5AB, #CC00CC);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-size: 550% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}

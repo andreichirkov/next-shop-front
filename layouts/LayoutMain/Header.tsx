@@ -3,6 +3,7 @@ import HeaderButton from "../../components/HeaderButton/HeaderButton"
 import HeaderLink from "../../components/HeaderLink/HeaderLink"
 import { useState } from "react"
 import cn from "classnames"
+import LogoMain from "../../components/LogoMain/LogoMain";
 
 export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   console.log('Render Header.jsx')
@@ -183,9 +184,9 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
         data-component="BGForMouseLeaveHeader"></div>
       <nav className="container px-container flex items-center justify-between h-10  ">
         {buildLeftHeaderMenu()}
-        <div className="flex" data-section="Center">
-          LOGO
-        </div>
+        <a href={'#'} className="flex" data-section="Center">
+          <LogoMain />
+        </a>
         {buildRightHeaderMenu()}
       </nav>
     </header>
