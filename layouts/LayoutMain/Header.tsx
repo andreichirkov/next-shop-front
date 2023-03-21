@@ -111,7 +111,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             <a
               href={"#"}
               onMouseOver={() => openMenuItem(menuItem.slug)}
-              className="flex items-center text-white px-2 h-8 rounded-lg hover:bg-neutral-600">
+              className="flex items-center text-white px-4 h-8 rounded-lg hover:bg-neutral-600">
               {menuItem.name}
             </a>
             {buildModalMenuItem(menuItem)}
@@ -126,23 +126,25 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       <div
         data-component="ModalMenuItem"
         className={cn(
-          "flex absolute top-[calc(100%+0.5rem)] bg-neutral-600 p-2 rounded-lg",
+          "absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 bg-neutral-600 rounded-lg",
           {
-            ["hidden"]: !menuItem.isOpened
+            // ["hidden"]: !menuItem.isOpened
+            ["hidden"]: false
           }
         )}>
         {menuItem.table.map((column, i) => (
-          <div className="" key={i} data-component="ColumnMenuItem">
+          <div className="flex flex-col" key={i} data-component="ColumnMenuItem">
             <a
               data-component="ColumnMenuHeading"
-              className="block text-white underline underline-offset-4"
+              className="px-2 py-1 mb-1 block text-white font-medium rounded-lg hover:bg-neutral-700"
               href={column.heading.link}>
               {column.heading.name}
             </a>
-            <ul className="2" data-component="ColumnMenuList">
+            <div className='w-[calc(100%-1rem)] self-center border-b border-neutral-500'></div>
+            <ul className="mt-1 flex flex-col" data-component="ColumnMenuList">
               {column.body.map((cell, j) => (
-                <li key={j}>
-                  <a className="block text-white" href={cell.link}>
+                <li className='' key={j}>
+                  <a className="px-2 py-1 block text-white rounded-lg hover:bg-neutral-700" href={cell.link}>
                     {cell.name}
                   </a>
                 </li>
