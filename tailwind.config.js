@@ -16,8 +16,8 @@ module.exports = {
     },
     fontSize: {
       // [fontSize, lineHeight]
-      xs: ['12px', '1.3'],
-      sm: ['14px', '1.3'],
+      xs: ['13px', '1.3'],
+      sm: ['15px', '1.3'],
       base: ['16px', '1.3'],
       lg: ['18px', '1.3'],
       xl: ['20px', '1.3'],

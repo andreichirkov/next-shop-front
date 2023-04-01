@@ -4,6 +4,9 @@ import Posts from "../components/Posts/Posts"
 import { dehydrate, QueryClient, useQuery } from "react-query"
 import { fetchPosts } from "../api/posts"
 import Error from "../components/Error/Error"
+import Cover from "../components/Cover/Cover";
+import {Product} from "../inferfaces/product.interface";
+import ProductsList from "../components/ProductsList/ProductsList";
 
 const getStaticProps = async ctx => {
   console.log("getStaticProps => ctx =>", ctx)
@@ -27,6 +30,35 @@ const getStaticProps = async ctx => {
   }
 }
 
+const latestProducts: Product[] = [
+  {
+    id: 1,
+    brand: 'Найк 1',
+    title: 'Футболка 1',
+    sizes: {
+      xs: 1,
+      s: 2,
+      m: 3,
+      l: 3,
+      xl: 3,
+      xxl: 0
+    }
+  },
+  {
+    id: 2,
+    brand: 'Найк 2',
+    title: 'Футболка 2',
+    sizes: {
+      xs: 1,
+      s: 2,
+      m: 3,
+      l: 3,
+      xl: 3,
+      xxl: 0
+    }
+  },
+]
+
 function Index(props) {
   // Если ошибка в базовом запроссе из getServerSideProps
   if (props.isError) return <Error />
@@ -39,9 +71,12 @@ function Index(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-cyan-100 h-screen">
-        <div className="text-2xl text-center mb-4">Home index.tsx</div>
-        <Posts />
+      <div className="bg-cyan-100">
+        <div className="text-2xl text-center mb-4">
+          <Cover />
+        </div>
+        <ProductsList products={latestProducts} />
+        {/*<Posts />*/}
       </div>
     </>
   )

@@ -3,10 +3,10 @@ import HeaderButton from "../../components/HeaderButton/HeaderButton"
 import HeaderLink from "../../components/HeaderLink/HeaderLink"
 import { useState } from "react"
 import cn from "classnames"
-import LogoMain from "../../components/LogoMain/LogoMain";
+import LogoMain from "../../components/LogoMain/LogoMain"
 
 export const Header = ({ ...props }: HeaderProps): JSX.Element => {
-  console.log('Render Header.jsx')
+  console.log("Render Header.jsx")
 
   interface HeadingItem {
     name: string
@@ -128,23 +128,28 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
         className={cn(
           "absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 bg-neutral-600 rounded-lg",
           {
-            // ["hidden"]: !menuItem.isOpened
-            ["hidden"]: false
+            ["hidden"]: !menuItem.isOpened
+            // ["hidden"]: false
           }
         )}>
         {menuItem.table.map((column, i) => (
-          <div className="flex flex-col" key={i} data-component="ColumnMenuItem">
+          <div
+            className="flex flex-col"
+            data-component="ColumnMenuItem"
+            key={i}>
             <a
               data-component="ColumnMenuHeading"
-              className="px-2 py-1 mb-1 block text-white font-medium rounded-lg hover:bg-neutral-700"
+              className="px-2 py-1 mb-1 block text-white rounded-lg hover:bg-neutral-700"
               href={column.heading.link}>
               {column.heading.name}
             </a>
-            <div className='w-[calc(100%-1rem)] self-center border-b border-neutral-500'></div>
+            <div className="w-[calc(100%-1rem)] self-center border-b border-neutral-500"></div>
             <ul className="mt-1 flex flex-col" data-component="ColumnMenuList">
               {column.body.map((cell, j) => (
-                <li className='' key={j}>
-                  <a className="px-2 py-1 block text-white rounded-lg hover:bg-neutral-700" href={cell.link}>
+                <li className="" key={j}>
+                  <a
+                    className="px-2 py-1 block text-sm text-white rounded-lg hover:bg-neutral-700"
+                    href={cell.link}>
                     {cell.name}
                   </a>
                 </li>
@@ -186,7 +191,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
         data-component="BGForMouseLeaveHeader"></div>
       <nav className="container px-container flex items-center justify-between h-10  ">
         {buildLeftHeaderMenu()}
-        <a href={'#'} className="flex" data-section="Center">
+        <a href={"#"} className="flex" data-section="Center">
           <LogoMain />
         </a>
         {buildRightHeaderMenu()}
