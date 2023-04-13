@@ -111,7 +111,9 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             <a
               href={"#"}
               onMouseOver={() => openMenuItem(menuItem.slug)}
-              className="flex items-center text-white px-4 h-8 rounded-lg hover:bg-neutral-600">
+              className={cn('flex items-center text-white px-4 h-8 rounded-lg',{
+                ["bg-white/[.1]"]: menuItem.isOpened
+              })}>
               {menuItem.name}
             </a>
             {buildModalMenuItem(menuItem)}
@@ -126,7 +128,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       <div
         data-component="ModalMenuItem"
         className={cn(
-          "absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 bg-neutral-600 rounded-lg",
+          " absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 backdrop-blur-xl bg-white/[.1] rounded-lg",
           {
             ["hidden"]: !menuItem.isOpened
             // ["hidden"]: false
@@ -139,16 +141,16 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             key={i}>
             <a
               data-component="ColumnMenuHeading"
-              className="px-2 py-1 mb-1 block text-white rounded-lg hover:bg-neutral-700"
+              className="px-2 py-1 mb-1 block text-white rounded-lg hover:bg-white/[.1]"
               href={column.heading.link}>
               {column.heading.name}
             </a>
-            <div className="w-[calc(100%-1rem)] self-center border-b border-neutral-500"></div>
+            <div className="w-[calc(100%-1rem)] self-center border-b border-white/[.4]"></div>
             <ul className="mt-1 flex flex-col" data-component="ColumnMenuList">
               {column.body.map((cell, j) => (
                 <li className="" key={j}>
                   <a
-                    className="px-2 py-1 block text-sm text-white rounded-lg hover:bg-neutral-700"
+                    className="px-2 py-1 block text-sm text-white rounded-lg hover:bg-white/[.1]"
                     href={cell.link}>
                     {cell.name}
                   </a>
@@ -183,13 +185,16 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   return (
     <header
       data-component="Header"
-      className="bg-neutral-700 relative"
+      className="fixed w-full h-11 pb-0.5"
       onMouseLeave={() => closeAllMenu()}
       {...props}>
+
+      {/*Плашка с Блюром отдельная, иначе Блюр в модалках не будет работать*/}
       <div
-        className="absolute top-0 left-0 w-full h-11"
-        data-component="BGForMouseLeaveHeader"></div>
-      <nav className="container px-container flex items-center justify-between h-10  ">
+        className="absolute z-[-1] top-0 left-0 w-full h-10 backdrop-blur-xl bg-black/[.1]"
+        data-component="BGForBackdropBlur"></div>
+
+      <nav className="container px-container flex items-center justify-between h-10 ">
         {buildLeftHeaderMenu()}
         <a href={"#"} className="flex" data-section="Center">
           <LogoMain />

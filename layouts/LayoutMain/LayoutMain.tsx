@@ -7,7 +7,10 @@ const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   return (
     <div className="layoutMain">
       <Header />
-      <div className={"Content"}>{children}</div>
+      <>
+        {children}
+      </>
+      {/*<div className={"Content"}></div>*/}
       <Footer />
     </div>
   )

@@ -12,4 +12,5 @@ export interface Product {
   brand: string
   title: string
   sizes: Sizes
+  colors: string[]
 }

@@ -4,9 +4,9 @@ import Posts from "../components/Posts/Posts"
 import { dehydrate, QueryClient, useQuery } from "react-query"
 import { fetchPosts } from "../api/posts"
 import Error from "../components/Error/Error"
-import Cover from "../components/Cover/Cover";
-import {Product} from "../inferfaces/product.interface";
-import ProductsList from "../components/ProductsList/ProductsList";
+import Cover from "../components/Cover/Cover"
+import { Product } from "../inferfaces/product.interface"
+import ProductsList from "../components/ProductsList/ProductsList"
 
 const getStaticProps = async ctx => {
   console.log("getStaticProps => ctx =>", ctx)
@@ -14,7 +14,7 @@ const getStaticProps = async ctx => {
   const queryClient = new QueryClient()
 
   try {
-   await queryClient.prefetchQuery(["posts"], fetchPosts)
+    await queryClient.prefetchQuery(["posts"], fetchPosts)
   } catch (error) {
     isError = true
     // @ts-ignore
@@ -33,8 +33,9 @@ const getStaticProps = async ctx => {
 const latestProducts: Product[] = [
   {
     id: 1,
-    brand: 'Найк 1',
-    title: 'Футболка 1',
+    brand: "Найк 1",
+    title: "Футболка 1",
+    colors: ['Зеленый', 'Красный'],
     sizes: {
       xs: 1,
       s: 2,
@@ -46,8 +47,9 @@ const latestProducts: Product[] = [
   },
   {
     id: 2,
-    brand: 'Найк 2',
-    title: 'Футболка 2',
+    brand: "Найк 2",
+    title: "Футболка 2 c очень длинным названием и переносом",
+    colors: ['Белый', 'Чёрный'],
     sizes: {
       xs: 1,
       s: 2,
@@ -56,7 +58,7 @@ const latestProducts: Product[] = [
       xl: 3,
       xxl: 0
     }
-  },
+  }
 ]
 
 function Index(props) {
@@ -71,13 +73,13 @@ function Index(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="bg-cyan-100">
-        <div className="text-2xl text-center mb-4">
+      <main className="bg-cyan-100">
+        <section className="text-2xl text-center mb-4">
           <Cover />
-        </div>
+        </section>
         <ProductsList products={latestProducts} />
         {/*<Posts />*/}
-      </div>
+      </main>
     </>
   )
 }
