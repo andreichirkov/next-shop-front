@@ -105,13 +105,13 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
 
   const buildLeftHeaderMenu = () => {
     return (
-      <ul className="flex" data-section="Left">
+      <ul className="flex justify-self-start" data-section="Left">
         {menuState.map((menuItem, i) => (
-          <li className="relative" key={i} data-component="HeaderMenuItem">
+          <li className="relative" key={menuItem.slug} data-component="HeaderMenuItem">
             <a
               href={"#"}
               onMouseOver={() => openMenuItem(menuItem.slug)}
-              className={cn('flex items-center text-white px-4 h-8 rounded-lg',{
+              className={cn('flex items-center text-white px-4 h-8 rounded-md',{
                 ["bg-white/[.1]"]: menuItem.isOpened
               })}>
               {menuItem.name}
@@ -128,7 +128,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       <div
         data-component="ModalMenuItem"
         className={cn(
-          " absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 backdrop-blur-xl bg-white/[.1] rounded-lg",
+          " absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 backdrop-blur-md bg-white/[.1] rounded-md",
           {
             ["hidden"]: !menuItem.isOpened
             // ["hidden"]: false
@@ -141,7 +141,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             key={i}>
             <a
               data-component="ColumnMenuHeading"
-              className="px-2 py-1 mb-1 block text-white rounded-lg hover:bg-white/[.1]"
+              className="px-2 py-1 mb-1 block text-white rounded-md hover:bg-white/[.1]"
               href={column.heading.link}>
               {column.heading.name}
             </a>
@@ -150,7 +150,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
               {column.body.map((cell, j) => (
                 <li className="" key={j}>
                   <a
-                    className="px-2 py-1 block text-sm text-white rounded-lg hover:bg-white/[.1]"
+                    className="px-2 py-1 block text-sm text-white rounded-md hover:bg-white/[.1]"
                     href={cell.link}>
                     {cell.name}
                   </a>
@@ -165,17 +165,17 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
 
   const buildRightHeaderMenu = () => {
     return (
-      <ul className="flex" data-section="Right">
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
+      <ul className="flex justify-self-end" data-section="Right">
+        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
           <HeaderButton>Поиск</HeaderButton>
         </li>
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
+        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
           <HeaderLink>Избранное | 0</HeaderLink>
         </li>
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
+        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
           <HeaderLink>Аккаунт</HeaderLink>
         </li>
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-lg">
+        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
           <HeaderButton>Корзина | 0</HeaderButton>
         </li>
       </ul>
@@ -191,12 +191,12 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
 
       {/*Плашка с Блюром отдельная, иначе Блюр в модалках не будет работать*/}
       <div
-        className="absolute z-[-1] top-0 left-0 w-full h-10 backdrop-blur-xl bg-black/[.1]"
+        className="absolute z-[-1] top-0 left-0 w-full h-10 backdrop-blur-md bg-black/[.3]"
         data-component="BGForBackdropBlur"></div>
 
-      <nav className="container px-container flex items-center justify-between h-10 ">
+      <nav className="container px-container h-10 grid items-center grid-cols-[1fr_220px_1fr]">
         {buildLeftHeaderMenu()}
-        <a href={"#"} className="flex" data-section="Center">
+        <a href={"#"} className="flex justify-center" data-section="Center">
           <LogoMain />
         </a>
         {buildRightHeaderMenu()}

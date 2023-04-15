@@ -36,29 +36,114 @@ const latestProducts: Product[] = [
     brand: "Найк 1",
     title: "Футболка 1",
     colors: ['Зеленый', 'Красный'],
-    sizes: {
-      xs: 1,
-      s: 2,
-      m: 3,
-      l: 3,
-      xl: 3,
-      xxl: 0
+    sizes: [
+      { value: 'xs', quantity: 1 },
+      { value: 's', quantity: 2 },
+      { value: 'm', quantity: 3 },
+      { value: 'l', quantity: 2 },
+      { value: 'xl', quantity: 13 },
+    ],
+    price: {
+      currentValue: 3990,
+      currency: '₽'
     }
   },
   {
     id: 2,
     brand: "Найк 2",
-    title: "Футболка 2 c очень длинным названием и переносом",
-    colors: ['Белый', 'Чёрный'],
-    sizes: {
-      xs: 1,
-      s: 2,
-      m: 3,
-      l: 3,
-      xl: 3,
-      xxl: 0
+    title: "Обувь 2 c очень длинным названием и переносом и еще тут текст",
+    colors: ['Белый', 'Черный'],
+    sizes: [
+      { value: 7, quantity: 1 },
+      { value: 7.5, quantity: 2 },
+      { value: 8, quantity: 3 },
+      { value: 8.5, quantity: 2 },
+      { value: 9, quantity: 13 },
+      { value: 9.5, quantity: 13 },
+      { value: 10, quantity: 13 },
+      { value: 10.5, quantity: 13 },
+      { value: 11, quantity: 13 },
+      { value: 11.5, quantity: 13 },
+      { value: 12, quantity: 13 },
+      { value: 12.5, quantity: 13 },
+      { value: 13, quantity: 13 },
+    ],
+    price: {
+      currentValue: 10000,
+      currency: '₽'
     }
-  }
+  },
+  {
+    id: 3,
+    brand: "Найк 3",
+    title: "Футболка 3 c очень ",
+    colors: ['Белый', 'Черный'],
+    sizes: [
+      { value: 'xs', quantity: 1 },
+      { value: 's', quantity: 2 },
+      { value: 'm', quantity: 3 },
+      { value: 'l', quantity: 2 },
+      { value: 'xl', quantity: 13 },
+    ],
+    price: {
+      oldValue: 1000,
+      currentValue: 900,
+      currency: '₽'
+    }
+  },
+
+  {
+    id: 4,
+    brand: "Найк 4",
+    title: "Футболка 2 ",
+    colors: ['Белый', 'Черный'],
+    sizes: [
+      { value: 'xs', quantity: 1 },
+      { value: 's', quantity: 2 },
+      { value: 'm', quantity: 3 },
+      { value: 'l', quantity: 2 },
+      { value: 'xl', quantity: 13 },
+    ],
+    price: {
+      currentValue: 3990,
+      currency: '₽'
+    }
+  },
+  {
+    id: 5,
+    brand: "Найк 5",
+    title: "Футболка 2 c очень длинным названием и переносом",
+    colors: ['Белый', 'Черный'],
+    sizes: [
+      { value: 'xs', quantity: 1 },
+      { value: 's', quantity: 2 },
+      { value: 'm', quantity: 3 },
+      { value: 'l', quantity: 2 },
+      { value: 'xl', quantity: 13 },
+    ],
+    price: {
+      currentValue: 3990,
+      currency: '₽'
+    }
+  },
+  {
+    id: 6,
+    brand: "Найк 6",
+    title: "Обувь названием и переносом",
+    colors: ['Белый', 'Черный'],
+    sizes: [
+      { value: 7, quantity: 1 },
+      { value: 7.5, quantity: 2 },
+      { value: 8, quantity: 3 },
+      { value: 8.5, quantity: 2 },
+      { value: 9, quantity: 13 },
+    ],
+    price: {
+      oldValue: 10500,
+      currentValue: 6990,
+      currency: '₽'
+    }
+  },
 ]
 
 function Index(props) {
@@ -73,7 +158,7 @@ function Index(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="bg-cyan-100">
+      <main className="">
         <section className="text-2xl text-center mb-4">
           <Cover />
         </section>

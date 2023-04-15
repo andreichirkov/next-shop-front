@@ -1,16 +1,21 @@
+
+
 export interface Sizes {
-  xs: number | null
-  s: number | null
-  m: number | null
-  l: number | null
-  xl: number | null
-  xxl: number | null
+  value: number | string,
+  quantity: number
+}
+
+export interface Price {
+  oldValue?: number
+  currentValue: number
+  currency: '₽' | '$'
 }
 
 export interface Product {
   id: number
   brand: string
   title: string
-  sizes: Sizes
+  sizes: Sizes[]
   colors: string[]
+  price: Price
 }

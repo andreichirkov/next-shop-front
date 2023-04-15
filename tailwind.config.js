@@ -14,15 +14,15 @@ module.exports = {
       //font can change by add class "font-poppins" on element
       poppins: ["Poppins", ...defaultTheme.fontFamily.sans]
     },
-    fontSize: {
-      // [fontSize, lineHeight]
-      xs: ['13px', '1.3'],
-      sm: ['15px', '1.3'],
-      base: ['16px', '1.3'],
-      lg: ['18px', '1.3'],
-      xl: ['20px', '1.3'],
-      '2xl': ['22px', '1.3'],
-    },
+    // fontSize: {
+    //   // [fontSize, lineHeight]
+    //   xs: ['13px', '1.3'],
+    //   sm: ['15px', '1.3'],
+    //   base: ['16px', '1.3'],
+    //   lg: ['18px', '1.3'],
+    //   xl: ['20px', '1.3'],
+    //   '2xl': ['22px', '1.3'],
+    // },
     container: {
       center: true,
       //set up max-width restriction
@@ -35,6 +35,9 @@ module.exports = {
       }
     },
     extend: {
+      colors: {
+        'insta-red': '#ed4956'
+      },
       fontSize: {
         xxs: "0.5rem"
       },

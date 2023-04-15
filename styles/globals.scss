@@ -65,3 +65,8 @@ a {
 //  //}
 //}
 
+.hGrid {
+  grid-template-columns: 1fr 220px 1fr;
+  align-items: center;
+}
+
