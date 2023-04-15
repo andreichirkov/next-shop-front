@@ -158,7 +158,7 @@ function Index(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="">
+      <main className="pt-10">
         <section className="text-2xl text-center mb-4">
           <Cover />
         </section>

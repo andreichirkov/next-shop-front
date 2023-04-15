@@ -128,7 +128,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       <div
         data-component="ModalMenuItem"
         className={cn(
-          " absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 backdrop-blur-md bg-white/[.1] rounded-md",
+          "absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 backdrop-blur-md bg-white/[.1] rounded-md",
           {
             ["hidden"]: !menuItem.isOpened
             // ["hidden"]: false
@@ -185,7 +185,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   return (
     <header
       data-component="Header"
-      className="fixed w-full h-11 pb-0.5"
+      className="fixed z-1 w-full h-11 pb-0.5"
       onMouseLeave={() => closeAllMenu()}
       {...props}>
 

@@ -14,23 +14,40 @@ function ProductCard({ product, ...props }: ProductCardProps) {
   const getDiscountInPercentages = (
     currentPrice: number,
     oldPrice: number
-  ): number => {
-    return Math.floor((100 * (oldPrice - currentPrice)) / oldPrice)
-  }
+  ): number => Math.floor((100 * (oldPrice - currentPrice)) / oldPrice)
 
   return (
     <li
       data-component="ProductCard"
-      className="flex flex-col cursor-pointer group/product_card"
+      className="relative flex flex-col cursor-pointer group/product_card"
       {...props}>
+      {/*Absolute discount label in corner in the picture*/}
+      {product.price.oldValue && (
+        // Background for exact label position
+        <div
+          data-component="BackgroundForLabel"
+          className="absolute flex items-end w-full aspect-square rounded-md">
+          <span
+            data-component="DiscountLabel"
+            className="backdrop-blur px-2 mb-1 ml-1 bg-insta-red text-white text-sm rounded-md">
+            {-getDiscountInPercentages(
+              product.price.currentValue,
+              product.price.oldValue
+            )}
+            %
+          </span>
+        </div>
+      )}
 
+      {/*Product image*/}
       <Image
         src={coverImage}
         quality={100}
         className="w-full object-cover aspect-square rounded-md"
-        alt="Cover"
+        alt="Product image"
       />
 
+      {/*Product body*/}
       <div
         data-component="ProductDescription"
         className="relative mt-2 grow grid grid-rows-1 auto-rows-max gap-1 rounded-md ">
@@ -39,23 +56,15 @@ function ProductCard({ product, ...props }: ProductCardProps) {
           <div>{product.title}</div>
         </div>
         <ProductColorPalette colors={product.colors} />
-        <div className="mt-1 ">
-          <span className='font-medium'>
+        <div className="mt-1">
+          <span className="font-medium">
             {product.price.currentValue}
             {product.price.currency}&nbsp;
           </span>
           {product.price.oldValue && (
-            <span className=" text-insta-red line-through">
+            <span className="text-insta-red text-sm line-through">
               {product.price.oldValue}
               {product.price.currency}
-            </span>
-          )}
-          {product.price.oldValue && (
-            <span className="absolute -top-[2.1rem] left-1.5 px-2 bg-insta-red text-white text-sm rounded-md">
-              {getDiscountInPercentages(
-                product.price.currentValue,
-                product.price.oldValue
-              )}%
             </span>
           )}
         </div>
