@@ -36,7 +36,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        'insta-red': '#ed4956'
+        'insta-red': '#ed4956',
+        'apple-black-opacity': 'rgba(22, 22, 23, .8)'
       },
       fontSize: {
         xxs: "0.5rem"
@@ -88,6 +89,9 @@ module.exports = {
         }
       })
       addUtilities({
+        ".apple-backdrop-filter": {
+          backdropFilter: "saturate(180%) blur(20px)"
+        },
         ".text-shadow": {
           textShadow: "1px 1px rgba(0, 0, 0, 0.4)"
         },

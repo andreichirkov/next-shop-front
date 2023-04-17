@@ -185,13 +185,14 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   return (
     <header
       data-component="Header"
-      className="fixed z-1 w-full h-11 pb-0.5"
+      className="fixed z-1 w-full h-10 pb-0.5"
       onMouseLeave={() => closeAllMenu()}
       {...props}>
 
       {/*Плашка с Блюром отдельная, иначе Блюр в модалках не будет работать*/}
       <div
-        className="absolute z-[-1] top-0 left-0 w-full h-10 backdrop-blur-md bg-black/[.3]"
+        // className="absolute z-[-1] top-0 left-0 w-full h-10 backdrop-blur-md bg-black/[.3]"
+        className="absolute z-[-1] top-0 left-0 w-full h-10 backdrop-blur-md bg-apple-black-opacity apple-backdrop-filter"
         data-component="BGForBackdropBlur"></div>
 
       <nav className="container px-container h-10 grid items-center grid-cols-[1fr_220px_1fr]">
