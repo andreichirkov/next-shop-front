@@ -8,9 +8,9 @@ import {HeaderTestAgain} from "./HeaderTestAgain";
 const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   return (
     <div className="layoutMain">
-      {/*<Header />*/}
-      <HeaderTestAgain />
-      <HeaderTest />
+      <Header />
+      {/*<HeaderTestAgain />*/}
+      {/*<HeaderTest />*/}
 
       <>
         {children}

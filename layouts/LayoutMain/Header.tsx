@@ -101,15 +101,22 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       backdropFilter: "saturate(0) blur(0)",
       backgroundColor: "rgba(22, 22, 23, 1)",
       transition: {
+        // delay: 0.3
+        // delay: 1,
         // when: "beforeChildren",
         // staggerChildren: 0.1
-        delayChildren: 5
+        // delayChildren: 5
       }
     },
     collapsed: {
       height: "auto",
       backdropFilter: "saturate(180%) blur(20px)",
-      backgroundColor: "rgba(22, 22, 23, .8)"
+      backgroundColor: "rgba(22, 22, 23, .8)",
+      transition: {
+        backgroundColor: {
+          delay: 0.3
+        }
+      }
     }
   }
 
@@ -117,10 +124,21 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
     expanded: {
       opacity: 1,
       height: "auto",
+      transition: {
+        opacity: {
+          delay: 0.3
+        }
+      }
     },
     collapsed: {
+
       opacity: 0,
       height: 0,
+      transition: {
+        height: {
+          delay: 0.3
+        }
+      }
     }
   }
 
