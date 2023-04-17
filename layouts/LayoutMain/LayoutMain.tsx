@@ -2,11 +2,16 @@ import { FunctionComponent } from "react"
 import { LayoutMainProps } from "./LayoutMain.props"
 import { Header } from "./Header"
 import { Footer } from "./Footer"
+import {HeaderTest} from "./HeaderTest";
+import {HeaderTestAgain} from "./HeaderTestAgain";
 
 const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   return (
     <div className="layoutMain">
-      <Header />
+      {/*<Header />*/}
+      <HeaderTestAgain />
+      <HeaderTest />
+
       <>
         {children}
       </>
