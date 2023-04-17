@@ -95,28 +95,29 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   const [menuState, setMenuState] = useState<MenuItem[]>(menuFront)
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
+  const [origin, setOrigin] = useState("1990");
+
   const variants = {
     expanded: {
       height: "auto",
       backdropFilter: "saturate(0) blur(0)",
       backgroundColor: "rgba(22, 22, 23, 1)",
-      transition: {
-        // delay: 0.3
-        // delay: 1,
-        // when: "beforeChildren",
-        // staggerChildren: 0.1
-        // delayChildren: 5
-      }
+      transition: {}
     },
+    // expanded: (origin) => {
+    //   console.log(origin)
+    //
+    //   return {}
+    // },
     collapsed: {
       height: "auto",
       backdropFilter: "saturate(180%) blur(20px)",
       backgroundColor: "rgba(22, 22, 23, .8)",
-      transition: {
-        backgroundColor: {
-          delay: 0.3
-        }
-      }
+      // transition: {
+      //   backgroundColor: {
+      //     delay: 0.3
+      //   }
+      // }
     }
   }
 
@@ -124,21 +125,21 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
     expanded: {
       opacity: 1,
       height: "auto",
-      transition: {
-        opacity: {
-          delay: 0.3
-        }
-      }
+      // transition: {
+      //   opacity: {
+      //     delay: 0.3
+      //   }
+      // }
     },
     collapsed: {
 
       opacity: 0,
       height: 0,
-      transition: {
-        height: {
-          delay: 0.3
-        }
-      }
+      // transition: {
+      //   height: {
+      //     delay: 0.3
+      //   }
+      // }
     }
   }
 
@@ -258,10 +259,12 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       <motion.nav
         data-component="Nav:GlobalAndAccordion"
         className=" w-full "
-
+        key={origin}
+        custom={origin}
         variants={variants}
         initial={"collapsed"}
-        animate={isOpen ? "expanded" : "collapsed"}>
+        // animate={isOpen ? "expanded" : "collapsed"}
+      >
 
         {/*Главная плашка навигации*/}
         <AnimatePresence>
@@ -279,7 +282,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
                 <motion.div
                   data-component="Nav->Accordion"
                   className="container px-container text-white flex gap-4 "
-                  key={"key"}
+                  key={menuItem.slug}
                   initial={"collapsed"}
                   animate={isOpen ? "expanded" : "collapsed"}
                   exit={"collapsed"}
