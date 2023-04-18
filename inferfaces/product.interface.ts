@@ -1,5 +1,3 @@
-
-
 export interface Sizes {
   value: number | string,
   quantity: number

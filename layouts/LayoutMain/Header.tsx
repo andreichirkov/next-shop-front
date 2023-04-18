@@ -1,36 +1,47 @@
-import { HeaderProps } from "./Header.props"
-import HeaderButton from "../../components/HeaderButton/HeaderButton"
-import HeaderLink from "../../components/HeaderLink/HeaderLink"
-import { useState } from "react"
-import cn from "classnames"
+import { DetailedHTMLProps, HTMLAttributes, useState } from "react"
 import LogoMain from "../../components/LogoMain/LogoMain"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion, MotionConfig, Variants } from "framer-motion"
+import { HeaderRightMenu } from "../../components/HeaderRightMenu/HeaderRightMenu"
+import { HeaderLeftMenu } from "../../components/HeaderLeftMenu/HeaderLeftMenu"
+import { ResizableBlock } from "../../components/ResizableBlock/ResizableBlock"
+import { HeaderResizableMenu } from "../../components/HeaderResizableMenu/HeaderResizableMenu"
+import { MenuItem } from "../../inferfaces/menu.interface"
+
+const DURATION = 1
+
+const backgroundVariants: Variants = {
+  expanded: {
+    backdropFilter: "saturate(0) blur(0)",
+    backgroundColor: "rgba(22, 22, 23, 1)"
+  },
+
+  collapsed: {
+    backdropFilter: "saturate(180%) blur(20px)",
+    backgroundColor: "rgba(22, 22, 23, .8)"
+  }
+}
+
+const opacityVariants: Variants = {
+  expanded: {
+    opacity: 1,
+    transition: { duration: DURATION / 2, delay: DURATION / 2 }
+  },
+  collapsed: {
+    opacity: 0,
+    transition: { duration: DURATION / 2 }
+  }
+}
+
+export interface HeaderProps
+  extends DetailedHTMLProps<
+    HTMLAttributes<HTMLHeadingElement>,
+    HTMLHeadingElement
+  > {}
 
 export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   console.log("Render Header.jsx")
 
-  interface HeadingItem {
-    name: string
-    link: string
-  }
-
-  interface BodyItem {
-    name: string
-    link: string
-  }
-
-  interface TableMenuItem {
-    heading: HeadingItem
-    body: BodyItem[]
-  }
-
-  interface MenuItem {
-    slug: string
-    name: string
-    isOpened?: boolean
-    table: TableMenuItem[]
-  }
-
+  //Сделать: получили меню с Бэкенда на Стороне Сервера, без флагов открытия
   const menuFromBack: MenuItem[] = [
     {
       slug: "latest",
@@ -82,67 +93,23 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             { name: "Футболки", link: "#" },
             { name: "Блузки", link: "#" },
             { name: "Бла", link: "#" },
-            { name: "Бла2", link: "#" },
+            { name: "Бла2", link: "#" }
           ]
         }
       ]
     }
   ]
+
+  //Добавили на Фронтенда недостоющий флаг (открыто/нет меню)
   const menuFront: MenuItem[] = menuFromBack.map(item => {
     return { ...item, isOpened: false }
   })
 
+  //Делаем Локальный Стейт с Меню, имеющим доп. ключи
   const [menuState, setMenuState] = useState<MenuItem[]>(menuFront)
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  const [origin, setOrigin] = useState("1990");
-
-  const variants = {
-    expanded: {
-      height: "auto",
-      backdropFilter: "saturate(0) blur(0)",
-      backgroundColor: "rgba(22, 22, 23, 1)",
-      transition: {}
-    },
-    // expanded: (origin) => {
-    //   console.log(origin)
-    //
-    //   return {}
-    // },
-    collapsed: {
-      height: "auto",
-      backdropFilter: "saturate(180%) blur(20px)",
-      backgroundColor: "rgba(22, 22, 23, .8)",
-      // transition: {
-      //   backgroundColor: {
-      //     delay: 0.3
-      //   }
-      // }
-    }
-  }
-
-  const variantsChildren = {
-    expanded: {
-      opacity: 1,
-      height: "auto",
-      // transition: {
-      //   opacity: {
-      //     delay: 0.3
-      //   }
-      // }
-    },
-    collapsed: {
-
-      opacity: 0,
-      height: 0,
-      // transition: {
-      //   height: {
-      //     delay: 0.3
-      //   }
-      // }
-    }
-  }
-
+  //Увеличение Хедера по высоте и открытия категории меню по Слагу
   const openMenuItem2 = (categorySlug: string): void => {
     setIsOpen(true)
     setMenuState &&
@@ -151,170 +118,54 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       )
   }
 
-  // const openMenuItem = (categorySlug: string): void => {
-  //   setMenuState &&
-  //     setMenuState(
-  //       menuState.map(m => ({ ...m, isOpened: m.slug === categorySlug }))
-  //     )
-  // }
-
+  //Уменьшение Хедера к исходным размерам и закрыть вообще все категории
   const closeAllMenu = (): void => {
     setIsOpen(false)
     setMenuState &&
       setMenuState(menuState.map(m => ({ ...m, isOpened: false })))
   }
 
-  const buildLeftHeaderMenu = () => {
-    return (
-      <ul className="flex justify-self-start" data-section="Left">
-        {menuState.map((menuItem, i) => (
-          <li
-            className="relative"
-            key={menuItem.slug}
-            data-component="HeaderMenuItem">
-            <a
-              href={"#"}
-              onMouseOver={() => openMenuItem2(menuItem.slug)}
-              className={cn(
-                "flex items-center text-white px-4 h-8 rounded-md",
-                {
-                  ["bg-white/[.1]"]: menuItem.isOpened
-                }
-              )}>
-              {menuItem.name}
-            </a>
-            {/*{buildModalMenuItem(menuItem)}*/}
-          </li>
-        ))}
-      </ul>
-    )
-  }
-
-  const buildModalMenuItem = (menuItem: MenuItem) => {
-    return (
-      <div
-        data-component="ModalMenuItem"
-        className={cn(
-          "absolute top-[calc(100%+0.5rem)] flex gap-4 p-2 backdrop-blur-md bg-white/[.1] rounded-md",
-          {
-            ["hidden"]: !menuItem.isOpened
-            // ["hidden"]: false
-          }
-        )}>
-        {menuItem.table.map((column, i) => (
-          <div
-            className="flex flex-col"
-            data-component="ColumnMenuItem"
-            key={i}>
-            <a
-              data-component="ColumnMenuHeading"
-              className="px-2 py-1 mb-1 block text-white rounded-md hover:bg-white/[.1]"
-              href={column.heading.link}>
-              {column.heading.name}
-            </a>
-            <div className="w-[calc(100%-1rem)] self-center border-b border-white/[.4]"></div>
-            <ul className="mt-1 flex flex-col" data-component="ColumnMenuList">
-              {column.body.map((cell, j) => (
-                <li className="" key={j}>
-                  <a
-                    className="px-2 py-1 block text-sm text-white rounded-md hover:bg-white/[.1]"
-                    href={cell.link}>
-                    {cell.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-  const buildRightHeaderMenu = () => {
-    return (
-      <ul className="flex justify-self-end" data-section="Right">
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
-          <HeaderButton>Поиск</HeaderButton>
-        </li>
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
-          <HeaderLink>Избранное | 0</HeaderLink>
-        </li>
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
-          <HeaderLink>Аккаунт</HeaderLink>
-        </li>
-        <li className="flex cursor-pointer items-center text-white px-2 h-8 hover:bg-neutral-600 hover:rounded-md">
-          <HeaderButton>Корзина | 0</HeaderButton>
-        </li>
-      </ul>
-    )
-  }
-
   return (
-    <header
-      data-component="Header"
-      className="fixed z-1 w-full"
-      onMouseLeave={() => closeAllMenu()}
-      {...props}>
-
-      <motion.nav
-        data-component="Nav:GlobalAndAccordion"
-        className=" w-full "
-        key={origin}
-        custom={origin}
-        variants={variants}
-        initial={"collapsed"}
-        // animate={isOpen ? "expanded" : "collapsed"}
-      >
-
-        {/*Главная плашка навигации*/}
-        <AnimatePresence>
-          <div data-component="Nav->Global" className="container px-container h-10 grid items-center grid-cols-[1fr_220px_1fr]">
-            {buildLeftHeaderMenu()}
+    <MotionConfig transition={{ DURATION }}>
+      <header
+        data-component="Header"
+        className="fixed z-1 w-full"
+        onMouseLeave={() => closeAllMenu()}
+        {...props}>
+        <motion.nav
+          data-component="Nav->GlobalMenuAndResizableMenu"
+          className=" w-full "
+          variants={backgroundVariants}
+          initial={"collapsed"}
+          animate={isOpen ? "expanded" : "collapsed"}>
+          {/*Глобальный блок навигации*/}
+          <div
+            data-component="Nav->GlobalMenu"
+            className="container px-container h-10 grid items-center grid-cols-[1fr_220px_1fr]">
+            <HeaderLeftMenu
+              menuState={menuState}
+              openMenuItem2={slug => openMenuItem2(slug)}
+            />
             <a href={"#"} className="flex justify-center" data-section="Center">
               <LogoMain />
             </a>
-            {buildRightHeaderMenu()}
+            <HeaderRightMenu />
           </div>
 
-          {menuState.map(
-            menuItem =>
-              menuItem.isOpened && (
-                <motion.div
-                  data-component="Nav->Accordion"
-                  className="container px-container text-white flex gap-4 "
-                  key={menuItem.slug}
-                  initial={"collapsed"}
-                  animate={isOpen ? "expanded" : "collapsed"}
-                  exit={"collapsed"}
-                  variants={variantsChildren}>
-                  {menuItem.table.map((column, i) => (
-                    <div className="flex flex-col py-8 ">
-                      <a
-                        data-component="ColumnMenuHeading"
-                        className="px-2 py-1 mb-1 block text-white rounded-md hover:bg-white/[.1]"
-                        href={column.heading.link}>
-                        {column.heading.name}
-                      </a>
-                      <ul
-                        className="mt-1 flex flex-col"
-                        data-component="ColumnMenuList">
-                        {column.body.map((cell, j) => (
-                          <li className="h-10" key={j}>
-                            <a
-                              className="px-2 py-1 block text-sm text-white rounded-md hover:bg-white/[.1]"
-                              href={cell.link}>
-                              {cell.name}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </motion.div>
-              )
-          )}
-        </AnimatePresence>
-      </motion.nav>
-    </header>
+          {/*Меню с изменяющейся высотой*/}
+          <ResizableBlock variants={opacityVariants}>
+            {menuState.map(
+              menuItem =>
+                menuItem.isOpened && (
+                  <HeaderResizableMenu
+                    menuItem={menuItem}
+                    key={menuItem.slug}
+                  />
+                )
+            )}
+          </ResizableBlock>
+        </motion.nav>
+      </header>
+    </MotionConfig>
   )
 }

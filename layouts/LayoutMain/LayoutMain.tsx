@@ -1,21 +1,18 @@
-import { FunctionComponent } from "react"
-import { LayoutMainProps } from "./LayoutMain.props"
+import {FunctionComponent, ReactNode} from "react"
 import { Header } from "./Header"
 import { Footer } from "./Footer"
-import {HeaderTest} from "./HeaderTest";
-import {HeaderTestAgain} from "./HeaderTestAgain";
+
+export interface LayoutMainProps {
+  children: ReactNode
+}
 
 const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   return (
     <div className="layoutMain">
       <Header />
-      {/*<HeaderTestAgain />*/}
-      {/*<HeaderTest />*/}
-
       <>
         {children}
       </>
-      {/*<div className={"Content"}></div>*/}
       <Footer />
     </div>
   )
