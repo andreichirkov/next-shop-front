@@ -1,18 +1,22 @@
 import { DetailedHTMLProps, HTMLAttributes, useState } from "react"
 import LogoMain from "../../components/LogoMain/LogoMain"
 import { motion, MotionConfig, Variants } from "framer-motion"
-import { HeaderRightMenu } from "../../components/HeaderRightMenu/HeaderRightMenu"
-import { HeaderLeftMenu } from "../../components/HeaderLeftMenu/HeaderLeftMenu"
+import { HeaderRightMenu } from "../../components/HeaderModule/HeaderRightMenu/HeaderRightMenu"
+import { HeaderLeftMenu } from "../../components/HeaderModule/HeaderLeftMenu/HeaderLeftMenu"
 import { ResizableBlock } from "../../components/ResizableBlock/ResizableBlock"
-import { HeaderResizableMenu } from "../../components/HeaderResizableMenu/HeaderResizableMenu"
+import { HeaderResizableMenu } from "../../components/HeaderModule/HeaderResizableMenu/HeaderResizableMenu"
 import { MenuItem } from "../../inferfaces/menu.interface"
 
-const DURATION = 1
+const DURATION = 0.5
+const DELAY = 0.5
 
 const backgroundVariants: Variants = {
   expanded: {
     backdropFilter: "saturate(0) blur(0)",
-    backgroundColor: "rgba(22, 22, 23, 1)"
+    backgroundColor: "rgba(22, 22, 23, 1)",
+    // transition: {
+    //   type: 'spring', damping: 300
+    // }
   },
 
   collapsed: {
@@ -126,7 +130,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   }
 
   return (
-    <MotionConfig transition={{ DURATION }}>
+    <MotionConfig transition={{ duration:DURATION }}>
       <header
         data-component="Header"
         className="fixed z-1 w-full"

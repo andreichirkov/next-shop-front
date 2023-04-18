@@ -1,4 +1,4 @@
-import { MenuItem } from "../../inferfaces/menu.interface"
+import { MenuItem } from "../../../inferfaces/menu.interface"
 
 interface HeaderResizableMenu {
   menuItem: MenuItem

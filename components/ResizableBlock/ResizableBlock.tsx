@@ -13,7 +13,8 @@ export function ResizableBlock({ children, variants }: ResizableBlockProps) {
   return (
     <motion.div
       data-component="ResizableBlock"
-      animate={{ height: height || "auto" }}
+      animate={{ height: height || 0 }}
+      transition={{ ease: 'anticipate' }}
       className="relative overflow-hidden">
       <AnimatePresence initial={false}>
         <motion.div

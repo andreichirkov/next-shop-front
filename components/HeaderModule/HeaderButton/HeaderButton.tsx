@@ -1,4 +1,4 @@
-import ModalSmall from "../ModalSmall/ModalSmall"
+import ModalSmall from "../../ModalSmall/ModalSmall"
 import { useState } from "react"
 
 function HeaderButton({ children }) {

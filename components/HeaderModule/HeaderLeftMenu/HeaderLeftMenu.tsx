@@ -1,5 +1,5 @@
 import cn from "classnames"
-import { MenuItem } from "../../inferfaces/menu.interface"
+import { MenuItem } from "../../../inferfaces/menu.interface"
 
 interface HeaderLeftMenu {
   menuState: MenuItem[]
