@@ -1,20 +1,58 @@
 import useMeasure from "react-use-measure"
 import {AnimatePresence, motion, Variants} from "framer-motion"
-import {ReactNode} from "react";
+import { ReactNode } from "react"
 
 interface ResizableBlockProps {
   variants: Variants
   children: ReactNode
+  isOpen: boolean
 }
 
-export function ResizableBlock({ children, variants }: ResizableBlockProps) {
+export function ResizableBlock({ children, variants, isOpen }: ResizableBlockProps) {
   let [measureElementRef, { height }] = useMeasure()
+
+  const heightAndClipPathVariants = {
+    expanded: {
+      height,
+      // clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+      clipPath: 'circle(100% at 30px 0px)',
+      transition: {
+        duration: 3,
+        // height: {
+        //   delay: 1,
+        //   duration: 2
+        // },
+        clipPath: {
+          delay: 3,
+          duration: 2
+        }
+      }
+    },
+    collapsed: {
+      height,
+      // clipPath: 'polygon(0 0, 0 0, 0 0, 0 0)',
+      clipPath: 'circle(0% at 30px 0px)',
+      transition: {
+        height: {
+          // delay: 2,
+          duration: 3
+        },
+        clipPath: {
+
+          duration: 1
+        },
+      }
+    }
+  }
 
   return (
     <motion.div
       data-component="ResizableBlock"
-      animate={{ height: height || 0 }}
-      transition={{ ease: 'anticipate' }}
+      variants={heightAndClipPathVariants}
+      initial={'collapsed'}
+      animate={isOpen ? "expanded" : "collapsed"}
+      // exit={{y: -20}}
+      transition={{ ease: "anticipate" }}
       className="relative overflow-hidden">
       <AnimatePresence initial={false}>
         <motion.div

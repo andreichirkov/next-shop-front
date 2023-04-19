@@ -7,21 +7,18 @@ import { ResizableBlock } from "../../components/ResizableBlock/ResizableBlock"
 import { HeaderResizableMenu } from "../../components/HeaderModule/HeaderResizableMenu/HeaderResizableMenu"
 import { MenuItem } from "../../inferfaces/menu.interface"
 
-const DURATION = 0.5
+const DURATION = 3
 const DELAY = 0.5
 
 const backgroundVariants: Variants = {
   expanded: {
     backdropFilter: "saturate(0) blur(0)",
     backgroundColor: "rgba(22, 22, 23, 1)",
-    // transition: {
-    //   type: 'spring', damping: 300
-    // }
   },
 
   collapsed: {
     backdropFilter: "saturate(180%) blur(20px)",
-    backgroundColor: "rgba(22, 22, 23, .8)"
+    backgroundColor: "rgba(22, 22, 23, .8)",
   }
 }
 
@@ -157,7 +154,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
           </div>
 
           {/*Меню с изменяющейся высотой*/}
-          <ResizableBlock variants={opacityVariants}>
+          <ResizableBlock variants={opacityVariants} isOpen={isOpen}>
             {menuState.map(
               menuItem =>
                 menuItem.isOpened && (
