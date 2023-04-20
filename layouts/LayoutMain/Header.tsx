@@ -117,19 +117,17 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   //Увеличение Хедера по высоте и открытия категории меню по Слагу
-  const openMenuItem2 = (categorySlug: string): void => {
+  const openMenuBySlug = (categorySlug: string): void => {
     setIsOpen(true)
-    setMenuState &&
-      setMenuState(
-        menuState.map(m => ({ ...m, isOpened: m.slug === categorySlug }))
-      )
+    setMenuState(
+      menuState.map(m => ({ ...m, isOpened: m.slug === categorySlug }))
+    )
   }
 
   //Уменьшение Хедера к исходным размерам и закрыть вообще все категории
-  const closeAllMenu = (): void => {
+  const closeResizableMenu = (): void => {
     setIsOpen(false)
-    setMenuState &&
-      setMenuState(menuState.map(m => ({ ...m, isOpened: false })))
+    setMenuState(menuState.map(m => ({ ...m, isOpened: false })))
   }
 
   return (
@@ -137,7 +135,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       <header
         data-component="Header"
         className="fixed z-1 w-full"
-        onMouseLeave={() => closeAllMenu()}
+        onMouseLeave={() => closeResizableMenu()}
         {...props}>
         <motion.nav
           data-component="Nav->GlobalMenuAndResizableMenu"
@@ -151,7 +149,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             className="container px-container h-10 grid items-center grid-cols-[1fr_220px_1fr]">
             <HeaderLeftMenu
               menuState={menuState}
-              openMenuItem2={slug => openMenuItem2(slug)}
+              openMenuBySlug={slug => openMenuBySlug(slug)}
             />
             <a href={"#"} className="flex justify-center" data-section="Center">
               <LogoMain />
@@ -160,7 +158,10 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
           </div>
 
           {/*Меню с изменяющейся высотой*/}
-          <ResizableBlock variants={opacityVariants} isOpen={isOpen} DURATION={DURATION}>
+          <ResizableBlock
+            variants={opacityVariants}
+            isOpen={isOpen}
+            DURATION={DURATION}>
             {menuState.map(
               menuItem =>
                 menuItem.isOpened && (
