@@ -1,10 +1,13 @@
 import { MenuItem } from "../../../inferfaces/menu.interface"
 
-interface HeaderResizableMenu {
+interface HeaderResizableMenuProps {
   menuItem: MenuItem
 }
 
-export const HeaderResizableMenu = ({ menuItem, ...props }) => {
+export const HeaderResizableMenu = ({
+  menuItem,
+  ...props
+}: HeaderResizableMenuProps) => {
   return (
     <div
       className="container px-container text-white flex gap-4 "
@@ -14,7 +17,7 @@ export const HeaderResizableMenu = ({ menuItem, ...props }) => {
         <div key={i} className="flex flex-col py-8 ">
           <a
             data-component="ColumnMenuHeading"
-            className="px-2 py-1 mb-1 block text-white rounded-md hover:bg-white/[.1]"
+            className="button:header-submenu mb-1 font-bold"
             href={column.heading.link}>
             {column.heading.name}
           </a>
@@ -22,7 +25,7 @@ export const HeaderResizableMenu = ({ menuItem, ...props }) => {
             {column.body.map((cell, j) => (
               <li className="h-10" key={j}>
                 <a
-                  className="px-2 py-1 block text-sm text-white rounded-md hover:bg-white/[.1]"
+                  className="button:header-submenu"
                   href={cell.link}>
                   {cell.name}
                 </a>

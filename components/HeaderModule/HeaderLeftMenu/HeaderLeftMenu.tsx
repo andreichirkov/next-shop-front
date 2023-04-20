@@ -14,13 +14,12 @@ export const HeaderLeftMenu = ({
     <ul className="flex justify-self-start" data-section="Left">
       {menuState.map((menuItem, i) => (
         <li
-          className="relative"
           key={menuItem.slug}
           data-component="HeaderMenuItem">
           <a
             href={"#"}
             onMouseOver={() => openMenuItem2(menuItem.slug)}
-            className={cn("flex items-center text-white px-4 h-8 rounded-md", {
+            className={cn("button:header-menu", {
               ["bg-white/[.1]"]: menuItem.isOpened
             })}>
             {menuItem.name}

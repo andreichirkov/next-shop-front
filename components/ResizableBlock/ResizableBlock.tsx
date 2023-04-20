@@ -1,47 +1,38 @@
 import useMeasure from "react-use-measure"
-import {AnimatePresence, motion, Variants} from "framer-motion"
+import { AnimatePresence, motion, Variants } from "framer-motion"
 import { ReactNode } from "react"
 
 interface ResizableBlockProps {
   variants: Variants
   children: ReactNode
   isOpen: boolean
+  DURATION: number
 }
 
-export function ResizableBlock({ children, variants, isOpen }: ResizableBlockProps) {
+export function ResizableBlock({
+  children,
+  variants,
+  isOpen,
+  DURATION
+}: ResizableBlockProps) {
   let [measureElementRef, { height }] = useMeasure()
 
   const heightAndClipPathVariants = {
     expanded: {
       height,
       // clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-      clipPath: 'circle(100% at 30px 0px)',
+      clipPath: "circle(100% at 30px 0px)",
       transition: {
-        duration: 3,
-        // height: {
-        //   delay: 1,
-        //   duration: 2
-        // },
         clipPath: {
-          delay: 3,
-          duration: 2
+          delay: DURATION / 2,
+          duration: DURATION * 1.2
         }
       }
     },
     collapsed: {
       height,
       // clipPath: 'polygon(0 0, 0 0, 0 0, 0 0)',
-      clipPath: 'circle(0% at 30px 0px)',
-      transition: {
-        height: {
-          // delay: 2,
-          duration: 3
-        },
-        clipPath: {
-
-          duration: 1
-        },
-      }
+      clipPath: "circle(0% at 30px 0px)"
     }
   }
 
@@ -49,11 +40,10 @@ export function ResizableBlock({ children, variants, isOpen }: ResizableBlockPro
     <motion.div
       data-component="ResizableBlock"
       variants={heightAndClipPathVariants}
-      initial={'collapsed'}
+      initial={"collapsed"}
       animate={isOpen ? "expanded" : "collapsed"}
-      // exit={{y: -20}}
       transition={{ ease: "anticipate" }}
-      className="relative overflow-hidden">
+      className="relative overflow-hidden px-container">
       <AnimatePresence initial={false}>
         <motion.div
           key={JSON.stringify(children, ignoreCircularReferences())}
@@ -77,6 +67,8 @@ export function ResizableBlock({ children, variants, isOpen }: ResizableBlockPro
   circular references and internal React properties.
 
   https://github.com/facebook/react/issues/8669#issuecomment-531515508
+
+  It is to use Children as key.
 */
 const ignoreCircularReferences = () => {
   const seen = new WeakSet()

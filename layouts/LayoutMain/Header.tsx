@@ -7,18 +7,17 @@ import { ResizableBlock } from "../../components/ResizableBlock/ResizableBlock"
 import { HeaderResizableMenu } from "../../components/HeaderModule/HeaderResizableMenu/HeaderResizableMenu"
 import { MenuItem } from "../../inferfaces/menu.interface"
 
-const DURATION = 3
-const DELAY = 0.5
+const DURATION = 0.5
 
 const backgroundVariants: Variants = {
   expanded: {
     backdropFilter: "saturate(0) blur(0)",
-    backgroundColor: "rgba(22, 22, 23, 1)",
+    backgroundColor: "rgba(22, 22, 23, 1)"
   },
 
   collapsed: {
     backdropFilter: "saturate(180%) blur(20px)",
-    backgroundColor: "rgba(22, 22, 23, .8)",
+    backgroundColor: "rgba(22, 22, 23, .8)"
   }
 }
 
@@ -49,10 +48,17 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       name: "Поступления",
       table: [
         {
-          heading: { name: "Все новинки", link: "#" },
+          heading: { name: "Поступившие дропы", link: "#" },
           body: [
-            { name: "Эта неделя", link: "#" },
-            { name: "Этот месяц", link: "#" }
+            { name: "На этой неделе", link: "#" },
+            { name: "В этом месяце", link: "#" }
+          ]
+        },
+        {
+          heading: { name: "Ожидаемые дропы", link: "#" },
+          body: [
+            { name: "В этом месяце", link: "#" },
+            { name: "В ближайшие месяца", link: "#" }
           ]
         }
       ]
@@ -127,7 +133,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   }
 
   return (
-    <MotionConfig transition={{ duration:DURATION }}>
+    <MotionConfig transition={{ duration: DURATION }}>
       <header
         data-component="Header"
         className="fixed z-1 w-full"
@@ -154,7 +160,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
           </div>
 
           {/*Меню с изменяющейся высотой*/}
-          <ResizableBlock variants={opacityVariants} isOpen={isOpen}>
+          <ResizableBlock variants={opacityVariants} isOpen={isOpen} DURATION={DURATION}>
             {menuState.map(
               menuItem =>
                 menuItem.isOpened && (
