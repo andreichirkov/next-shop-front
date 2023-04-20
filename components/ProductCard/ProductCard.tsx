@@ -30,10 +30,12 @@ function ProductCard({ product, ...props }: ProductCardProps) {
           <span
             data-component="DiscountLabel"
             className="backdrop-blur px-2 mb-1 ml-1 bg-insta-red text-white text-sm rounded-md">
-            {-getDiscountInPercentages(
-              product.price.currentValue,
-              product.price.oldValue
-            )}
+            {
+              -getDiscountInPercentages(
+                product.price.currentValue,
+                product.price.oldValue
+              )
+            }
             %
           </span>
         </div>
@@ -68,7 +70,7 @@ function ProductCard({ product, ...props }: ProductCardProps) {
             </span>
           )}
         </div>
-        <ul className="absolute hidden top-full flex-wrap gap-1 rounded-md group-hover/product_card:flex">
+        <ul className="absolute top-full flex flex-wrap gap-1 rounded-md opacity-0 transition duration-1000 delay-200 group-hover/product_card:opacity-100">
           {product.sizes.map((size: Sizes) => (
             <li className="px-0 py-0 z-1 text-xs uppercase" key={size.value}>
               {size.value}
