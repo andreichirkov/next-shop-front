@@ -64,6 +64,31 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       ]
     },
     {
+      slug: "brands",
+      name: "Бренды",
+      table: [
+        {
+          heading: { name: "Все бренды", link: "#" },
+          body: [
+            { name: "Найк", link: "#" },
+            { name: "Адик", link: "#" }
+          ]
+        },
+        {
+          body: [
+            { name: "Гучи (колонка 2)", link: "#" },
+            { name: "Пума (колонка 2)", link: "#" }
+          ]
+        },
+        {
+          body: [
+            { name: "Хуючи (колонка 3)", link: "#" },
+            { name: "Кек (колонка 3)", link: "#" }
+          ]
+        }
+      ]
+    },
+    {
       slug: "men",
       name: "Мужское",
       table: [

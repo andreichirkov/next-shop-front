@@ -9,7 +9,7 @@ interface BodyItem {
 }
 
 interface TableMenuItem {
-  heading: HeadingItem
+  heading?: HeadingItem
   body: BodyItem[]
 }
 
