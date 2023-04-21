@@ -4,7 +4,7 @@ import Posts from "../components/Posts/Posts"
 import { dehydrate, QueryClient, useQuery } from "react-query"
 import { fetchPosts } from "../api/posts"
 import Error from "../components/Error/Error"
-import Cover from "../components/Cover/Cover"
+import CoverSlider from "../components/CoverSlider/CoverSlider"
 import { Product } from "../inferfaces/product.interface"
 import ProductsList from "../components/ProductsList/ProductsList"
 
@@ -160,7 +160,7 @@ function Index(props) {
       </Head>
       <main className="pt-10">
         <section className="text-2xl text-center mb-4">
-          <Cover />
+          <CoverSlider />
         </section>
         <ProductsList title='Дроп этой недели' products={latestProducts} />
         <ProductsList title='Дроп этого месяца' products={latestProducts} />

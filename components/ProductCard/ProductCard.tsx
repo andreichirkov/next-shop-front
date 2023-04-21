@@ -4,7 +4,7 @@ import { Product, Sizes } from "../../inferfaces/product.interface"
 import styles from "./ProductCard.module.scss"
 import ProductColorPalette from "../ProductColorPalette/ProductColorPalette"
 
-const coverImage = require("../../images/cover.jpg")
+const tempImage = require("../../images/slide-1.jpg")
 
 interface ProductCardProps {
   product: Product
@@ -43,7 +43,7 @@ function ProductCard({ product, ...props }: ProductCardProps) {
 
       {/*Product image*/}
       <Image
-        src={coverImage}
+        src={tempImage}
         quality={100}
         className="w-full object-cover aspect-square rounded-md"
         alt="Product image"

@@ -1,15 +1,14 @@
 import React from "react"
 import Image from "next/image"
 
-const coverImage = require("../../images/cover.jpg")
-
+const sliderImage1 = require("../../images/slide-1.jpg")
 
 //Поменять высоту на правильную
-function Cover(props) {
+function CoverSlider(props) {
   return (
-    <div data-component='Cover' className="h-[calc(50vh)]">
+    <div data-component='CoverSlider' className="h-[calc(50vh)]">
       <Image
-        src={coverImage}
+        src={sliderImage1}
         quality={100}
         unoptimized={true}
         className="h-full w-full object-cover"
@@ -19,4 +18,4 @@ function Cover(props) {
   )
 }
 
-export default Cover
+export default CoverSlider
