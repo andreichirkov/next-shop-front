@@ -162,7 +162,8 @@ function Index(props) {
         <section className="text-2xl text-center mb-4">
           <Cover />
         </section>
-        <ProductsList products={latestProducts} />
+        <ProductsList title='Дроп этой недели' products={latestProducts} />
+        <ProductsList title='Дроп этого месяца' products={latestProducts} />
         {/*<Posts />*/}
       </main>
     </>

@@ -71,6 +71,13 @@ module.exports = {
             backgroundColor: "#ff0009"
           }
         },
+        ".link-primary": {
+          color: "#06c",
+          fontSize: theme('fontSize.lg'),
+          "&:hover": {
+            textDecoration: "underline"
+          }
+        },
         ".text-link": {
           textUnderlineOffset: "4",
           color: "rgba(255, 255, 255, .9)",
@@ -89,22 +96,16 @@ module.exports = {
         }
       })
       addUtilities({
-        ".apple-backdrop-filter": {
-          backdropFilter: "saturate(180%) blur(20px)"
-        },
-        ".text-shadow": {
-          textShadow: "1px 1px rgba(0, 0, 0, 0.4)"
+        ".flex-center-between": {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between"
         },
         ".outline-border-none": {
           outline: "none",
           border: "none"
         },
-        "flex-center-between": {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between"
-        },
-        "image-like-bg": {
+        ".image-like-bg": {
           objectPosition: "center",
           objectFit: "cover",
           pointerEvents: "none"
