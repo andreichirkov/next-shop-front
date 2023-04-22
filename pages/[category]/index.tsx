@@ -1,71 +1,53 @@
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import Head from "next/head"
 import { withCSR } from "../../HOC/with-CSR"
-import {dehydrate, QueryClient, useQuery, useQueryClient} from "react-query";
-import {config} from "../../lib/react-query-config";
-import {fetchPosts} from "../../api/posts";
-import {fetchProductsByCategory} from "../../api/products";
-import Error from "../../components/Error/Error";
-import axios from "axios";
+import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query"
+import { config } from "../../lib/react-query-config"
+import { fetchProductsByCategory } from "../../api/products"
+import Error from "../../components/Error/Error"
 
-// export const getServerSideProps = withCSR(async ctx => {
-//   // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
-//
-//   const category = ctx.params.category
-//   // console.log('category via ctx.params', category)
-//
-//   let isError = false
-//   const queryClient = new QueryClient()
-//
-//   try {
-//     //Здесь будет prefetchQuery по категории,
-//     //чтобы потом в глубине компонентов использовать useQuery по КЛЮЧУ категории
-//     await queryClient.prefetchQuery({
-//       queryKey: [category],
-//       queryFn: () => fetchProductsByCategory(category),
-//     })
-//   } catch (e) {
-//     const result = (e as Error).message
-//     isError = true
-//     //хз правильная ли обработка ошибки
-//     ctx.res.statusCode = result
-//   }
-//
-//
-//   return {
-//     props: {
-//       isError,
-//       dehydratedState: dehydrate(queryClient)
-//     }
-//   }
-// })
+export const getServerSideProps = withCSR(async ctx => {
+  // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
+
+  const category = ctx.params.category
+  // console.log('category via ctx.params', category)
+
+  let isError = false
+  const queryClient = new QueryClient(config)
+
+  try {
+    //Здесь будет prefetchQuery по категории,
+    //чтобы потом в глубине компонентов использовать useQuery по КЛЮЧУ категории
+    //Если в RQDevTools нет запроса, значит где то ошибка, которую тяжело найти на SSR
+    await queryClient.fetchQuery({
+      queryKey: [category],
+      queryFn: () => fetchProductsByCategory(category),
+      // only prefetch if older than 10 seconds
+      staleTime: 10 * 1000
+    })
+  } catch (axiosErrorMessage) {
+    //Желтый цвет
+    console.error('\x1b[43m%s\x1b[0m', 'Catch SSR CategoryPage => ' + axiosErrorMessage)
+    isError = true
+
+    //Это понадобится для простой стр 404
+    // ctx.res.statusCode = result
+  }
+
+  return {
+    props: {
+      isError,
+      dehydratedState: dehydrate(queryClient)
+    }
+  }
+})
 
 const CategoryPage = (props): JSX.Element => {
-  // Если ошибка в базовом запроссе из getServerSideProps
   console.log(props)
-
+  // Если ошибка в базовом запроссе из getServerSideProps
   if (props.isError) return <Error />
 
-  const getCharacters = async () => {
-    await new Promise((r) => setTimeout(r, 500))
-    const { data } = await axios.get('https://rickandmortyapi.com/api/character/')
-    return data
-  }
-  const queryClient = useQueryClient()
-  // const charactersQuery = useQuery({
-  //   queryKey: ['characters'],
-  //   queryFn: getCharacters,
-  // })
-
-  const fn = async () => await queryClient.prefetchQuery({
-    queryKey: ['character'],
-    queryFn: () => getCharacters(),
-    staleTime: 10 * 1000, // only prefetch if older than 10 seconds
-  })
-
-  fn()
-
-  // Если ошибки нет данные ПРЕФЕТЧАСТСЯ на этот запрос
+  // Если ошибки нет данные ФЕТЧАСТСЯ на этот запрос и лежат в RQ кэше
   return (
     <>
       <Head>
