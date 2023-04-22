@@ -1,23 +1,71 @@
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import Head from "next/head"
 import { withCSR } from "../../HOC/with-CSR"
+import {dehydrate, QueryClient, useQuery, useQueryClient} from "react-query";
+import {config} from "../../lib/react-query-config";
+import {fetchPosts} from "../../api/posts";
+import {fetchProductsByCategory} from "../../api/products";
+import Error from "../../components/Error/Error";
+import axios from "axios";
 
-export const getServerSideProps = withCSR(async ctx => {
-  console.log('CategoryPage getServerSideProps => ctx =>', ctx)
+// export const getServerSideProps = withCSR(async ctx => {
+//   // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
+//
+//   const category = ctx.params.category
+//   // console.log('category via ctx.params', category)
+//
+//   let isError = false
+//   const queryClient = new QueryClient()
+//
+//   try {
+//     //Здесь будет prefetchQuery по категории,
+//     //чтобы потом в глубине компонентов использовать useQuery по КЛЮЧУ категории
+//     await queryClient.prefetchQuery({
+//       queryKey: [category],
+//       queryFn: () => fetchProductsByCategory(category),
+//     })
+//   } catch (e) {
+//     const result = (e as Error).message
+//     isError = true
+//     //хз правильная ли обработка ошибки
+//     ctx.res.statusCode = result
+//   }
+//
+//
+//   return {
+//     props: {
+//       isError,
+//       dehydratedState: dehydrate(queryClient)
+//     }
+//   }
+// })
 
-  const category = ctx.params.category
-  console.log('category via ctx.params', category)
+const CategoryPage = (props): JSX.Element => {
+  // Если ошибка в базовом запроссе из getServerSideProps
+  console.log(props)
 
+  if (props.isError) return <Error />
 
-
-  return {
-    props: {
-
-    }
+  const getCharacters = async () => {
+    await new Promise((r) => setTimeout(r, 500))
+    const { data } = await axios.get('https://rickandmortyapi.com/api/character/')
+    return data
   }
-})
+  const queryClient = useQueryClient()
+  // const charactersQuery = useQuery({
+  //   queryKey: ['characters'],
+  //   queryFn: getCharacters,
+  // })
 
-const CategoryPage = (): JSX.Element => {
+  const fn = async () => await queryClient.prefetchQuery({
+    queryKey: ['character'],
+    queryFn: () => getCharacters(),
+    staleTime: 10 * 1000, // only prefetch if older than 10 seconds
+  })
+
+  fn()
+
+  // Если ошибки нет данные ПРЕФЕТЧАСТСЯ на этот запрос
   return (
     <>
       <Head>
