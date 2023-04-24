@@ -52,3 +52,11 @@ a {
   @apply px-2 h-8 flex items-center text-sm text-white rounded-md hover:bg-white/[.1]
 }
 
+.link\:text-with-arrow {
+  @apply flex items-center underline underline-offset-2;
+
+  &:hover {
+    @apply text-link-blue-primary;
+  }
+}
+

@@ -36,6 +36,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        'link-blue-primary': '#06c',
         'insta-red': '#ed4956',
         'apple-black-opacity': 'rgba(22, 22, 23, .8)'
       },
@@ -71,13 +72,13 @@ module.exports = {
             backgroundColor: "#ff0009"
           }
         },
-        ".link-primary": {
-          color: "#06c",
-          fontSize: theme('fontSize.lg'),
-          "&:hover": {
-            textDecoration: "underline"
-          }
-        },
+        // ".link-primary": {
+        //   color: "#06c",
+        //   fontSize: theme('fontSize.lg'),
+        //   "&:hover": {
+        //     textDecoration: "underline"
+        //   }
+        // },
         ".text-link": {
           textUnderlineOffset: "4",
           color: "rgba(255, 255, 255, .9)",

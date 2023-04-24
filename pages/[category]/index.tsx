@@ -5,14 +5,17 @@ import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query"
 import { config } from "../../lib/react-query-config"
 import { fetchProductsByCategory } from "../../api/products"
 import Error from "../../components/Error/Error"
+import { NextRouter, useRouter } from "next/router"
+import { useProductsQuery } from "../../hooks/api/products"
+import ProductsList from "../../components/ProductsList/ProductsList";
 
 export const getServerSideProps = withCSR(async ctx => {
   // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
 
-  const category = ctx.params.category
+  const category: string = ctx.params.category
   // console.log('category via ctx.params', category)
 
-  let isError = false
+  let isError: boolean = false
   const queryClient = new QueryClient(config)
 
   try {
@@ -27,7 +30,10 @@ export const getServerSideProps = withCSR(async ctx => {
     })
   } catch (axiosErrorMessage) {
     //Желтый цвет
-    console.error('\x1b[43m%s\x1b[0m', 'Catch SSR CategoryPage => ' + axiosErrorMessage)
+    console.error(
+      "\x1b[43m%s\x1b[0m",
+      "Catch SSR CategoryPage => " + axiosErrorMessage
+    )
     isError = true
 
     //Это понадобится для простой стр 404
@@ -43,7 +49,16 @@ export const getServerSideProps = withCSR(async ctx => {
 })
 
 const CategoryPage = (props): JSX.Element => {
-  console.log(props)
+  console.log("CategoryPage props =>", props)
+
+  const router: NextRouter = useRouter()
+  const category = router.query.category as string
+  console.log("query-category", category)
+
+  //Пока queryKey и queryFn совпадает в fetchQuery и useQuery,
+  //то isLoading никогда не произойдет
+  const { data: products, isLoading } = useProductsQuery(category)
+
   // Если ошибка в базовом запроссе из getServerSideProps
   if (props.isError) return <Error />
 
@@ -59,7 +74,9 @@ const CategoryPage = (props): JSX.Element => {
       <div className="pt-10 ">
         <div className="flex">
           <aside>Фильтры</aside>
-          <main>Мейн</main>
+          <main>
+            {products && <ProductsList products={products} />}
+          </main>
         </div>
       </div>
     </>
