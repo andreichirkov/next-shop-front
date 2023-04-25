@@ -1,11 +1,14 @@
 import { MenuItem } from "../../../inferfaces/menu.interface"
+import Link from "next/link"
 
 interface HeaderResizableMenuProps {
   menuItem: MenuItem
+  closeResizableMenu: () => void
 }
 
 export const HeaderResizableMenu = ({
   menuItem,
+  closeResizableMenu,
   ...props
 }: HeaderResizableMenuProps) => {
   return (
@@ -16,14 +19,16 @@ export const HeaderResizableMenu = ({
       {menuItem.table.map((column, i) => (
         <div key={i} className="flex flex-col py-8 ">
           {column.heading ? (
-            <a
+            <Link
               data-component="ColumnMenuHeading"
               className="button:header-submenu mb-1 font-bold"
+              onClick={closeResizableMenu}
               href={column.heading.link}>
               {column.heading.name}
-            </a>
+            </Link>
           ) : (
             <div
+              // Блок для правильного отступа и деления на колонки
               data-component="Transparent"
               className="h-10 pointer-events-none"></div>
           )}

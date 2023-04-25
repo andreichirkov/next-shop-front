@@ -24,10 +24,6 @@ function ProductsList({
       {title && (
         <div className="px-container flex-center-between mb-8 mt-20">
           <h3 className="uppercase font-medium">{title}</h3>
-          {/*<a href="#" className="link-primary">*/}
-          {/*  Смотреть все {">"}*/}
-          {/*</a>*/}
-
           {url && urlText && <LinkText url={url} urlText={urlText} />}
         </div>
       )}

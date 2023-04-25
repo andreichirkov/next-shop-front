@@ -39,8 +39,6 @@ export interface HeaderProps
   > {}
 
 export const Header = ({ ...props }: HeaderProps): JSX.Element => {
-  console.log("Render Header.jsx")
-
   //Сделать: получили меню с Бэкенда на Стороне Сервера, без флагов открытия
   const menuFromBack: MenuItem[] = [
     {
@@ -93,14 +91,14 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
       name: "Мужское",
       table: [
         {
-          heading: { name: "Обувь", link: "#" },
+          heading: { name: "Обувь(link)", link: "/footwear" },
           body: [
             { name: "Кроссовки", link: "#" },
             { name: "Тапочки", link: "#" }
           ]
         },
         {
-          heading: { name: "Одежда", link: "#" },
+          heading: { name: "Одежда(link)", link: "/clothing" },
           body: [
             { name: "Футболки", link: "#" },
             { name: "Рубашки", link: "#" }
@@ -132,7 +130,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
     }
   ]
 
-  //Добавили на Фронтенда недостоющий флаг (открыто/нет меню)
+  //Добавили на Фронтенде недостоющий флаг (открыто/нет меню)
   const menuFront: MenuItem[] = menuFromBack.map(item => {
     return { ...item, isOpened: false }
   })
@@ -193,6 +191,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
                   <HeaderResizableMenu
                     menuItem={menuItem}
                     key={menuItem.slug}
+                    closeResizableMenu={closeResizableMenu}
                   />
                 )
             )}
