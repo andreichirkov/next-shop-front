@@ -19,7 +19,8 @@ function ProductsList({
   return (
     <section
       data-component="ProductsList"
-      className="container px-4"
+      //container и px-4 класс по условию должен быть
+      className=" "
       {...props}>
       {title && (
         <div className="px-container flex-center-between mb-8 mt-20">

@@ -156,20 +156,20 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
   return (
     <MotionConfig transition={{ duration: DURATION }}>
       <header
-        data-component="Header"
+        data-component="LayoutHeader"
         className="fixed z-1 w-full"
         onMouseLeave={() => closeResizableMenu()}
         {...props}>
         <motion.nav
           data-component="Nav->GlobalMenuAndResizableMenu"
-          className=" w-full "
+          className="w-full "
           variants={backgroundVariants}
           initial={"collapsed"}
           animate={isOpen ? "expanded" : "collapsed"}>
           {/*Глобальный блок навигации*/}
           <div
             data-component="Nav->GlobalMenu"
-            className="container px-container h-10 grid items-center grid-cols-[1fr_220px_1fr]">
+            className="container px-container h-10 grid grid-cols-[1fr_220px_1fr] items-center">
             <HeaderLeftMenu
               menuState={menuState}
               openMenuBySlug={slug => openMenuBySlug(slug)}

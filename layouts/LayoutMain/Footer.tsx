@@ -8,7 +8,7 @@ export interface FooterProps
 
 export const Footer = ({...props}: FooterProps):JSX.Element => {
   return (
-    <footer className='bg-neutral-700' {...props}>
+    <footer data-component='LayoutFooter' className='bg-neutral-700' {...props}>
       Футер
     </footer>
   )

@@ -7,7 +7,7 @@ import { fetchProductsByCategory } from "../../api/products"
 import Error from "../../components/Error/Error"
 import { NextRouter, useRouter } from "next/router"
 import { useProductsQuery } from "../../hooks/api/products"
-import ProductsList from "../../components/ProductsList/ProductsList";
+import ProductsList from "../../components/ProductsList/ProductsList"
 
 export const getServerSideProps = withCSR(async ctx => {
   // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
@@ -71,12 +71,20 @@ const CategoryPage = (props): JSX.Element => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="pt-10 ">
-        <div className="flex">
-          <aside>Фильтры</aside>
-          <main>
-            {products && <ProductsList products={products} />}
-          </main>
+      <div
+        data-component="LayoutContentBody"
+        data-page="Category"
+        className="pt-10">
+        <div className="bg-pink-200 h-24 text-center">
+          Тут слайдер с выбором категории
+        </div>
+        <div className="bg-[rgba(22,22,23,.8)] h-24 text-center">
+          Тут текст категории с градиентом
+        </div>
+
+        <div className="container px-container grid grid-cols-[320px_1fr] gap-7">
+          <aside className='bg-green-300'>Фильтры</aside>
+          <main>{products && <ProductsList products={products} />}</main>
         </div>
       </div>
     </>

@@ -9,7 +9,7 @@ export default function LinkText({ url, urlText }: LinkTextProps): JSX.Element {
   return (
     <a
       href={url}
-      className="px-4 link:text-with-arrow">
+      className="px-4 link:text-with-arrow uppercase">
       <span>{urlText}</span>
       <ArrowIcon />
     </a>
