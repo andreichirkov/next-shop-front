@@ -17,7 +17,7 @@ export const fetchProductsByCategory = async category => {
 
 export const fetchProductById = async id => {
   await new Promise(_ => setTimeout(_, 500))
-  const { data } = await $localDBHost.get<Post>("posts/" + id)
-  console.warn(`Axios native: POST ${id} FETCHED`)
+  const { data } = await $localDBHost.get<Post>(id)
+  console.warn(`Axios native: PRODUCT c id => ${id} FETCHED`)
   return data
 }
