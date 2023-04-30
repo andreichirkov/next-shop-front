@@ -5,6 +5,7 @@ import { Product } from "../inferfaces/product.interface"
 export const fetchProductsByCategory = async category => {
   try {
     await new Promise(r => setTimeout(r, 500))
+    //Пример: http://localhost:4444/clothing (В url можно не писать baseUrl/)
     const { data } = await $localDBHost.get<Product[]>(category)
     return data
   } catch (error) {
@@ -15,7 +16,7 @@ export const fetchProductsByCategory = async category => {
 }
 
 export const fetchProductById = async id => {
-  await new Promise(r => setTimeout(r, 500))
+  await new Promise(_ => setTimeout(_, 500))
   const { data } = await $localDBHost.get<Post>("posts/" + id)
   console.warn(`Axios native: POST ${id} FETCHED`)
   return data

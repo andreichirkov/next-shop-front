@@ -75,13 +75,10 @@ const CategoryPage = (props): JSX.Element => {
         data-component="LayoutContentBody"
         data-page="Category"
         className="pt-10">
-        <div className="bg-pink-200 h-24 text-center">
-          Тут слайдер с выбором категории
+        <div className="bg-pink-200 h-[110px] flex flex-col items-center justify-center tempGradient">
+          <div className='  font-semibold uppercase'>Одежда</div>
         </div>
-        <div className="bg-[rgba(22,22,23,.8)] h-24 text-center">
-          Тут текст категории с градиентом
-        </div>
-
+        <div></div>
         <div className="container px-container grid grid-cols-[320px_1fr] gap-7">
           <aside className='bg-green-300'>Фильтры</aside>
           <main>{products && <ProductsList products={products} />}</main>

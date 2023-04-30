@@ -14,6 +14,7 @@ const getStaticProps = async ctx => {
   const queryClient = new QueryClient()
 
   try {
+    //В prefetchQuery try catch НЕ РАБОТАЕТ!!!!
     await queryClient.prefetchQuery(["posts"], fetchPosts)
   } catch (error) {
     isError = true

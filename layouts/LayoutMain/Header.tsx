@@ -174,7 +174,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
               menuState={menuState}
               openMenuBySlug={slug => openMenuBySlug(slug)}
             />
-            <a href={"#"} className="flex justify-center" data-section="Center">
+            <a href={"/"} className="flex justify-center" data-section="Center">
               <LogoMain />
             </a>
             <HeaderRightMenu />
