@@ -1,17 +1,33 @@
 import cn from "classnames"
+import {ReactNode, useState} from "react"
 
-const ModalSmall = ({ children, visible, setVisible }) => {
+interface ModalSmallProps {
+  title: string
+  options: string[]
+}
+
+const ModalSmall = ({ title, options }: ModalSmallProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
   return (
     <div
-      className={cn(
-        "text-white absolute -bottom-12 -left-0 bg-neutral-600 rounded-lg p-2",
-        {
-          ['hidden']: !visible
-        }
-      )}
+      className="relative flex items-center h-10 border-amber-500 border"
+      onMouseOver={() => setIsOpen(true)}
       data-component="ModalSmall">
-      {children}
-      <div onClick={() => setVisible(false)}>Крестик</div>
+      <span>{title}</span>
+      <div
+        onMouseLeave={() => setIsOpen(false)}
+        className={cn(
+          "absolute z-1 top-full right-0 flex flex-col bg-green-300",
+          {
+            ["hidden"]: !isOpen
+          }
+        )}>
+        {options.map(o => (
+          <span className="whitespace-nowrap" key={o}>{o}</span>
+        ))}
+
+      </div>
     </div>
   )
 }

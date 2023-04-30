@@ -1,6 +1,7 @@
 import { Product } from "../../inferfaces/product.interface"
 import ProductCard from "../ProductCard/ProductCard"
 import LinkText from "../LinkText/LinkText"
+import ModalSmall from "../ModalSmall/ModalSmall";
 
 //title, url и urlText есть, если список продуктов короткий
 //и выступает как ПРОМО материал
@@ -30,10 +31,10 @@ function ProductsList({
           <LinkText url={url} urlText={urlText} />
         </div>
       ) : (
-        <div className='mb-8 mt-8'>
+        <div className='mb-8 mt-8 flex-center-between'>
           <span>{products.length} товаров</span>
           <div>
-
+            <ModalSmall title='Вид' options={['4 в ряд', '3 в ряд']} />
           </div>
         </div>
       )}
