@@ -5,7 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {}
+:root {
+}
 
 * {
   box-sizing: border-box;
@@ -26,13 +27,14 @@ a {
 }
 
 @layer base {
+  //Тут нужно определиться с отступами
   .px-container {
     @screen sm {
       @apply px-4
     }
 
     @screen lg {
-      @apply px-2
+      @apply px-4
     }
   }
 
@@ -56,6 +58,10 @@ a {
 
 .button\:header-submenu {
   @apply px-2 h-8 flex items-center text-sm text-white rounded-md hover:bg-white/[.1]
+}
+
+.button\:modal-small {
+  @apply px-4 h-8 flex items-center text-base
 }
 
 .link\:text-with-arrow {

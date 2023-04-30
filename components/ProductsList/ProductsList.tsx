@@ -1,7 +1,9 @@
 import { Product } from "../../inferfaces/product.interface"
 import ProductCard from "../ProductCard/ProductCard"
 import LinkText from "../LinkText/LinkText"
-import ModalSmall from "../ModalSmall/ModalSmall";
+import ProductsView from "../ProductsView/ProductsView"
+import { useProductsView } from "../../store/productsView"
+import cn from "classnames"
 
 //title, url и urlText есть, если список продуктов короткий
 //и выступает как ПРОМО материал
@@ -19,6 +21,9 @@ function ProductsList({
   urlText,
   ...props
 }: ProductsListProps): JSX.Element {
+  const { itemsPerLine } = useProductsView()
+  console.log("itemsPerLine", itemsPerLine)
+
   return (
     <section
       data-component="ProductsList"
@@ -31,15 +36,21 @@ function ProductsList({
           <LinkText url={url} urlText={urlText} />
         </div>
       ) : (
-        <div className='mb-8 mt-8 flex-center-between'>
+        <div className="mb-8 mt-8 flex-center-between">
           <span>{products.length} товаров</span>
           <div>
-            <ModalSmall title='Вид' options={['4 в ряд', '3 в ряд']} />
+            <ProductsView />
+            {/*Сделять сортировку*/}
           </div>
         </div>
       )}
 
-      <ul className="grid grid-cols-4 gap-x-8 gap-y-11">
+      <ul
+        className={cn("grid gap-x-8 gap-y-11", {
+          //itemsPerLine могут быть только 3 или 4
+          ["grid-cols-4"]: itemsPerLine === 4,
+          ["grid-cols-3"]: itemsPerLine === 3
+        })}>
         {products.map(product => (
           <ProductCard product={product} key={product.id} />
         ))}
