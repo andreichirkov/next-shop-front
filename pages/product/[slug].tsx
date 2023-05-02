@@ -7,7 +7,7 @@ import { fetchProductBySlug, fetchProductsByCategory } from "../../api/products"
 import { useProductQuery, useProductsQuery } from "../../hooks/api/products"
 import Error from "../../components/Error/Error"
 import Head from "next/head"
-import {GetServerSidePropsResult} from "next"
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 
 interface SSRProps extends Record<string, unknown> {
   isError: boolean
@@ -16,7 +16,10 @@ interface SSRProps extends Record<string, unknown> {
 
 //Страница продукта без Лоадеров, withCSR не подходит
 //Для SEO такая страница сразу придет с данными
-export const getServerSideProps = async ({ params }): Promise<GetServerSidePropsResult<SSRProps>> => {
+export const getServerSideProps: GetServerSideProps<SSRProps> = async ({
+  params,
+  res
+}) => {
   // console.log('CategoryPage getServerSideProps; ctx =>', ctx)
 
   const slug = params?.slug as string
@@ -55,7 +58,9 @@ export const getServerSideProps = async ({ params }): Promise<GetServerSideProps
   }
 }
 
-function ProductPage(props: SSRProps): JSX.Element {
+function ProductPage(
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+): JSX.Element {
   console.log("ProductPage props =>", props)
 
   const router: NextRouter = useRouter()
