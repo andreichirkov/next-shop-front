@@ -1,7 +1,10 @@
 {
-  "clothing": [
+  "api": [
     {
       "id": 1,
+      "slug": "slug-1",
+      "category": "clothing",
+      "sub_category": "tees",
       "brand": "Найк 1",
       "title": "Футболка 1",
       "colors": [
@@ -37,6 +40,9 @@
     },
     {
       "id": 3,
+      "slug": "slug-3",
+      "category": "clothing",
+      "sub_category": "tees",
       "brand": "Найк 3",
       "title": "Футболка 3 c очень ",
       "colors": [
@@ -73,6 +79,9 @@
     },
     {
       "id": 4,
+      "slug": "slug-4",
+      "category": "clothing",
+      "sub_category": "tees",
       "brand": "Найк 4",
       "title": "Футболка 2 ",
       "colors": [
@@ -108,6 +117,9 @@
     },
     {
       "id": 5,
+      "slug": "slug-5",
+      "category": "clothing",
+      "sub_category": "tees",
       "brand": "Найк 5",
       "title": "Футболка 2 c очень длинным названием и переносом",
       "colors": [
@@ -140,12 +152,13 @@
         "currentValue": 3990,
         "currency": "₽"
       }
-    }
-  ],
-  "footwear": [
+    },
     {
       "id": 2,
-      "brand": "Найк 2",
+      "slug": "slug-2",
+      "category": "footwear",
+      "sub_category": "sneakers",
+      "brand": "Адидас 2",
       "title": "Обувь 2 c очень длинным названием и переносом и еще тут текст",
       "colors": [
         "Белый",
@@ -212,7 +225,10 @@
     },
     {
       "id": 6,
-      "brand": "Найк 6",
+      "slug": "slug-6",
+      "category": "footwear",
+      "sub_category": "sneakers",
+      "brand": "Адидас 6",
       "title": "Обувь названием и переносом",
       "colors": [
         "Белый",

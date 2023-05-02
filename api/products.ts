@@ -4,9 +4,13 @@ import { Product } from "../inferfaces/product.interface"
 
 export const fetchProductsByCategory = async category => {
   try {
-    await new Promise(r => setTimeout(r, 500))
-    //Пример: http://localhost:4444/clothing (В url можно не писать baseUrl/)
-    const { data } = await $localDBHost.get<Product[]>(category)
+    // await new Promise(r => setTimeout(r, 500))
+    //Пример: http://localhost:4444/clothing (В url можно не писать baseUrl)
+    const { data } = await $localDBHost.get<Product[]>("/api", {
+      params: {
+        category
+      }
+    })
     return data
   } catch (error) {
     const axiosErrorMessage = "Axios error => " + (error as Error).message
@@ -15,9 +19,13 @@ export const fetchProductsByCategory = async category => {
   }
 }
 
-export const fetchProductById = async id => {
-  await new Promise(_ => setTimeout(_, 500))
-  const { data } = await $localDBHost.get<Post>(id)
-  console.warn(`Axios native: PRODUCT c id => ${id} FETCHED`)
+export const fetchProductBySlug = async slug => {
+  // await new Promise(_ => setTimeout(_, 500))
+  const { data } = await $localDBHost.get<Post>('api/', {
+    params: {
+      slug
+    }
+  })
+  console.warn(`Axios native: PRODUCT c id => ${slug} FETCHED`)
   return data
 }
