@@ -1,20 +1,26 @@
 import { NextRouter, useRouter } from "next/router"
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import { withCSR } from "../../HOC/with-CSR"
-import { dehydrate, QueryClient } from "react-query"
+import { dehydrate, DehydratedState, QueryClient } from "react-query"
 import { config } from "../../lib/react-query-config"
 import { fetchProductBySlug, fetchProductsByCategory } from "../../api/products"
 import { useProductQuery, useProductsQuery } from "../../hooks/api/products"
 import Error from "../../components/Error/Error"
 import Head from "next/head"
+import {GetServerSidePropsResult} from "next"
+
+interface SSRProps extends Record<string, unknown> {
+  isError: boolean
+  dehydratedState: DehydratedState
+}
 
 //Страница продукта без Лоадеров, withCSR не подходит
 //Для SEO такая страница сразу придет с данными
-export const getServerSideProps = async ctx => {
+export const getServerSideProps = async ({ params }): Promise<GetServerSidePropsResult<SSRProps>> => {
   // console.log('CategoryPage getServerSideProps; ctx =>', ctx)
 
-  const slug = ctx.params.slug as string
-  console.log('category via ctx.params', slug)
+  const slug = params?.slug as string
+  console.log("category via ctx.params", slug)
 
   let isError: boolean = false
   const queryClient = new QueryClient(config)
@@ -49,7 +55,7 @@ export const getServerSideProps = async ctx => {
   }
 }
 
-function ProductPage(props) {
+function ProductPage(props: SSRProps): JSX.Element {
   console.log("ProductPage props =>", props)
 
   const router: NextRouter = useRouter()
@@ -78,8 +84,8 @@ function ProductPage(props) {
         className="pt-10"
         data-component="LayoutContentBody"
         data-page="ProductPage">
-        <div className='h-12 bg-green-300'></div>
-        <pre>{JSON.stringify(product,null, 2)}</pre>
+        <div className="h-12 bg-green-300"></div>
+        <pre>{JSON.stringify(product, null, 2)}</pre>
       </div>
     </>
   )
