@@ -1,7 +1,10 @@
 import { $localDBHost } from "../lib/axios"
 import { Product } from "../inferfaces/product.interface"
+import { number } from "prop-types"
 
-export const fetchProductsByCategory = async category => {
+export const fetchProductsByCategory = async (
+  category: string
+): Promise<Product[]> => {
   try {
     await new Promise(r => setTimeout(r, 1500))
     //Пример: http://localhost:4444/clothing (В url можно не писать baseUrl)
@@ -26,7 +29,7 @@ export const fetchProductsByCategory = async category => {
   }
 }
 
-export const fetchProductBySlug = async slug => {
+export const fetchProductBySlug = async (slug: string): Promise<Product> => {
   try {
     await new Promise(_ => setTimeout(_, 1500))
 

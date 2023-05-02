@@ -1,7 +1,9 @@
 import { useQuery } from "react-query"
 import { fetchProductBySlug, fetchProductsByCategory } from "../../api/products"
 
-export const useProductsQuery = category => {
+//Функции атоматически затипизированны
+
+export const useProductsQuery = (category: string) => {
   return useQuery({
     queryKey: [category],
     queryFn: () => fetchProductsByCategory(category),
@@ -13,7 +15,7 @@ export const useProductsQuery = category => {
   })
 }
 
-export const useProductQuery = slug => {
+export const useProductQuery = (slug: string) => {
   return useQuery({
     queryKey: [slug],
     queryFn: () => fetchProductBySlug(slug),
