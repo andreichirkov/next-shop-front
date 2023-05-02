@@ -3,6 +3,7 @@ import Image from "next/image"
 import { Product, Sizes } from "../../inferfaces/product.interface"
 import styles from "./ProductCard.module.scss"
 import ProductColorPalette from "../ProductColorPalette/ProductColorPalette"
+import Link from "next/link";
 
 const tempImage = require("../../images/slide-1.jpg")
 
@@ -53,10 +54,10 @@ function ProductCard({ product, ...props }: ProductCardProps) {
       <div
         data-component="ProductDescription"
         className="relative mt-2 grow grid grid-rows-1 auto-rows-max gap-1 rounded-md ">
-        <div className="text-sm">
+        <Link href={`/product/${product.slug}`} className="text-sm">
           <div className="font-medium">{product.brand}&nbsp;</div>
           <div>{product.title}</div>
-        </div>
+        </Link>
         <ProductColorPalette colors={product.colors} />
         <div className="mt-1">
           <span className="font-medium">

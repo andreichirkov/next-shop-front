@@ -11,6 +11,9 @@ export interface Price {
 
 export interface Product {
   id: number
+  slug: string
+  category: string
+  subCategory: string
   brand: string
   title: string
   sizes: Sizes[]

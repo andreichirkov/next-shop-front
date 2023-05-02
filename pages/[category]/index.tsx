@@ -9,10 +9,11 @@ import { NextRouter, useRouter } from "next/router"
 import { useProductsQuery } from "../../hooks/api/products"
 import ProductsList from "../../components/ProductsList/ProductsList"
 
+//В навигации по категориям используется Тихий Роутинг
 export const getServerSideProps = withCSR(async ctx => {
   // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
 
-  const category: string = ctx.params.category
+  const category = ctx.params.category as string
   // console.log('category via ctx.params', category)
 
   let isError: boolean = false
@@ -25,8 +26,8 @@ export const getServerSideProps = withCSR(async ctx => {
     await queryClient.fetchQuery({
       queryKey: [category],
       queryFn: () => fetchProductsByCategory(category),
-      // only prefetch if older than 10 seconds
-      staleTime: 10 * 1000
+      // only prefetch if older than 10 minutes
+      staleTime: 600 * 1000
     })
   } catch (axiosErrorMessage) {
     //Желтый цвет
@@ -50,19 +51,19 @@ export const getServerSideProps = withCSR(async ctx => {
 
 const CategoryPage = (props): JSX.Element => {
   console.log("CategoryPage props =>", props)
-  
 
   const router: NextRouter = useRouter()
   const category = router.query.category as string
-  const headTitle = `Страница категории ${category}`
+  const headTitle: string = `Страница категории ${category}`
   console.log("query-category", category)
 
   //Пока queryKey и queryFn совпадает в fetchQuery и useQuery,
   //то isLoading никогда не произойдет
-  const { data: products, isLoading } = useProductsQuery(category)
+  const { data: products, isLoading, isError } = useProductsQuery(category)
 
-  // Если ошибка в базовом запроссе из getServerSideProps
-  if (props.isError) return <Error />
+  // Если ошибка в базовом запроссе из getServerSideProps или на клиенте
+  if (props.isError || isError) return <Error />
+  if (isLoading) return <div className='pt-20'>withCSR client routing loading...</div>
 
   // Если ошибки нет данные ФЕТЧАСТСЯ на этот запрос и лежат в RQ кэше
   return (

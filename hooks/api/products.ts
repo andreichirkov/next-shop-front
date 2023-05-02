@@ -1,6 +1,5 @@
 import { useQuery } from "react-query"
-import { fetchPost, fetchPosts } from "../../api/posts"
-import {fetchProductById, fetchProductsByCategory} from "../../api/products"
+import { fetchProductBySlug, fetchProductsByCategory } from "../../api/products"
 
 export const useProductsQuery = category => {
   return useQuery({
@@ -17,7 +16,7 @@ export const useProductsQuery = category => {
 export const useProductQuery = slug => {
   return useQuery({
     queryKey: [slug],
-    queryFn: () => fetchProductById(slug),
+    queryFn: () => fetchProductBySlug(slug),
     // only prefetch if older than 10 seconds
     staleTime: 10 * 1000,
     onSuccess: data => {

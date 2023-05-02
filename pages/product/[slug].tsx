@@ -8,11 +8,13 @@ import { useProductQuery, useProductsQuery } from "../../hooks/api/products"
 import Error from "../../components/Error/Error"
 import Head from "next/head"
 
-export const getServerSideProps = withCSR(async ctx => {
-  // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
+//Страница продукта без Лоадеров, withCSR не подходит
+//Для SEO такая страница сразу придет с данными
+export const getServerSideProps = async ctx => {
+  // console.log('CategoryPage getServerSideProps; ctx =>', ctx)
 
-  const slug: string = ctx.params.slug
-  // console.log('category via ctx.params', category)
+  const slug = ctx.params.slug as string
+  console.log('category via ctx.params', slug)
 
   let isError: boolean = false
   const queryClient = new QueryClient(config)
@@ -45,25 +47,25 @@ export const getServerSideProps = withCSR(async ctx => {
       dehydratedState: dehydrate(queryClient)
     }
   }
-})
+}
 
 function ProductPage(props) {
   console.log("ProductPage props =>", props)
 
   const router: NextRouter = useRouter()
   const slug = router.query.slug as string
-  const headTitle = `Страница товара: ${slug}`
+  const headTitle: string = `Страница товара: ${slug}`
   console.log("query-slug", slug)
 
   //Пока queryKey и queryFn совпадает в fetchQuery и useQuery,
   //то isLoading никогда не произойдет
-  const { data: product, isLoading } = useProductQuery(slug)
+  //isError тоже, ошибка будет сразу в getServerSideProps
+  const { data: product } = useProductQuery(slug)
 
   // Если ошибка в базовом запроссе из getServerSideProps
   if (props.isError) return <Error />
 
   // Если ошибки нет данные ФЕТЧАСТСЯ на этот запрос и лежат в RQ кэше
-
   return (
     <>
       <Head>
@@ -76,6 +78,7 @@ function ProductPage(props) {
         className="pt-10"
         data-component="LayoutContentBody"
         data-page="ProductPage">
+        <div className='h-12 bg-green-300'></div>
         <pre>{JSON.stringify(product,null, 2)}</pre>
       </div>
     </>
