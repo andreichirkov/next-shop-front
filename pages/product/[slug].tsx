@@ -1,13 +1,16 @@
 import { NextRouter, useRouter } from "next/router"
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
-import { withCSR } from "../../HOC/with-CSR"
 import { dehydrate, DehydratedState, QueryClient } from "react-query"
 import { config } from "../../lib/react-query-config"
-import { fetchProductBySlug, fetchProductsByCategory } from "../../api/products"
-import { useProductQuery, useProductsQuery } from "../../hooks/api/products"
+import { fetchProductBySlug } from "../../api/products"
+import { useProductQuery } from "../../hooks/api/products"
 import Error from "../../components/Error/Error"
 import Head from "next/head"
-import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType
+} from "next"
 
 interface SSRProps extends Record<string, unknown> {
   isError: boolean
@@ -19,18 +22,16 @@ interface SSRProps extends Record<string, unknown> {
 export const getServerSideProps: GetServerSideProps<SSRProps> = async ({
   params,
   res
-}) => {
-  // console.log('CategoryPage getServerSideProps; ctx =>', ctx)
-
+}: GetServerSidePropsContext) => {
   const slug = params?.slug as string
-  console.log("category via ctx.params", slug)
+  console.log("Product Page SSR slug =>", slug)
 
   let isError: boolean = false
   const queryClient = new QueryClient(config)
 
   try {
     //Здесь будет prefetchQuery по категории,
-    //чтобы потом в глубине компонентов использовать useQuery по КЛЮЧУ категории
+    //чтобы потом в глубине компонентов использовать useQuery по queryKey категории
     //Если в RQDevTools нет запроса, значит где то ошибка, которую тяжело найти на SSR
     await queryClient.fetchQuery({
       queryKey: [slug],
@@ -47,7 +48,7 @@ export const getServerSideProps: GetServerSideProps<SSRProps> = async ({
     isError = true
 
     //Это понадобится для простой стр 404
-    // ctx.res.statusCode = result
+    //res.statusCode = bla
   }
 
   return {
@@ -76,7 +77,7 @@ function ProductPage(
   // Если ошибка в базовом запроссе из getServerSideProps
   if (props.isError) return <Error />
 
-  // Если ошибки нет данные ФЕТЧАСТСЯ на этот запрос и лежат в RQ кэше
+  // Если ошибки нет данные Фетчатся на этот запрос и лежат в RQ кэше
   return (
     <>
       <Head>

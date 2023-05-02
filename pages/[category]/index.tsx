@@ -1,55 +1,64 @@
 import { withLayoutMain } from "../../layouts/LayoutMain/LayoutMain"
 import Head from "next/head"
 import { withCSR } from "../../HOC/with-CSR"
-import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query"
+import { dehydrate, DehydratedState, QueryClient } from "react-query"
 import { config } from "../../lib/react-query-config"
 import { fetchProductsByCategory } from "../../api/products"
 import Error from "../../components/Error/Error"
 import { NextRouter, useRouter } from "next/router"
 import { useProductsQuery } from "../../hooks/api/products"
 import ProductsList from "../../components/ProductsList/ProductsList"
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType
+} from "next"
+
+interface SSRProps extends Record<string, unknown> {
+  isError: boolean
+  dehydratedState: DehydratedState
+}
 
 //В навигации по категориям используется Тихий Роутинг
-export const getServerSideProps = withCSR(async ctx => {
-  // console.log('CategoryPage getServerSideProps => ctx =>', ctx)
+export const getServerSideProps: GetServerSideProps<SSRProps> = withCSR(
+  async ({ params, res }: GetServerSidePropsContext) => {
+    const category = params?.category as string
+    console.log("Category Page SSR =>", category)
 
-  const category = ctx.params.category as string
-  // console.log('category via ctx.params', category)
+    let isError: boolean = false
+    const queryClient = new QueryClient(config)
 
-  let isError: boolean = false
-  const queryClient = new QueryClient(config)
+    try {
+      //Здесь будет prefetchQuery по категории,
+      //чтобы потом в глубине компонентов использовать useQuery по КЛЮЧУ категории
+      //Если в RQDevTools нет запроса, значит где то ошибка, которую тяжело найти на SSR
+      await queryClient.fetchQuery({
+        queryKey: [category],
+        queryFn: () => fetchProductsByCategory(category),
+        // only prefetch if older than 10 minutes
+        staleTime: 600 * 1000
+      })
+    } catch (axiosErrorMessage) {
+      //Желтый цвет
+      console.error(
+        "\x1b[43m%s\x1b[0m",
+        "Catch SSR CategoryPage => " + axiosErrorMessage
+      )
+      isError = true
+    }
 
-  try {
-    //Здесь будет prefetchQuery по категории,
-    //чтобы потом в глубине компонентов использовать useQuery по КЛЮЧУ категории
-    //Если в RQDevTools нет запроса, значит где то ошибка, которую тяжело найти на SSR
-    await queryClient.fetchQuery({
-      queryKey: [category],
-      queryFn: () => fetchProductsByCategory(category),
-      // only prefetch if older than 10 minutes
-      staleTime: 600 * 1000
-    })
-  } catch (axiosErrorMessage) {
-    //Желтый цвет
-    console.error(
-      "\x1b[43m%s\x1b[0m",
-      "Catch SSR CategoryPage => " + axiosErrorMessage
-    )
-    isError = true
-
-    //Это понадобится для простой стр 404
-    // ctx.res.statusCode = result
-  }
-
-  return {
-    props: {
-      isError,
-      dehydratedState: dehydrate(queryClient)
+    return {
+      props: {
+        isError,
+        dehydratedState: dehydrate(queryClient)
+      }
     }
   }
-})
+)
 
-const CategoryPage = (props): JSX.Element => {
+const CategoryPage = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+): JSX.Element => {
   console.log("CategoryPage props =>", props)
 
   const router: NextRouter = useRouter()
@@ -63,7 +72,8 @@ const CategoryPage = (props): JSX.Element => {
 
   // Если ошибка в базовом запроссе из getServerSideProps или на клиенте
   if (props.isError || isError) return <Error />
-  if (isLoading) return <div className='pt-20'>withCSR client routing loading...</div>
+  if (isLoading)
+    return <div className="pt-20">withCSR client routing loading...</div>
 
   // Если ошибки нет данные ФЕТЧАСТСЯ на этот запрос и лежат в RQ кэше
   return (
