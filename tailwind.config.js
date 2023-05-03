@@ -36,9 +36,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        'link-blue-primary': '#06c',
-        'insta-red': '#ed4956',
-        'apple-black-opacity': 'rgba(22, 22, 23, .8)'
+        "link-blue-opa": "rgba(0,118,255,.1)",
+        "link-blue-primary": "#06c",
+        "insta-red": "#ed4956",
+        "apple-black-opacity": "rgba(22, 22, 23, .8)"
       },
       fontSize: {
         xxs: "0.5rem"

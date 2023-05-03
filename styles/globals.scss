@@ -65,10 +65,12 @@ a {
 }
 
 .link\:text-with-arrow {
-  @apply flex items-center text-sm underline underline-offset-2;
+  //@apply flex items-center text-sm underline underline-offset-2;
+  @apply flex items-center text-sm text-link-blue-primary rounded-md;
 
   &:hover {
-    @apply text-link-blue-primary;
+    //@apply text-link-blue-primary;
+    @apply bg-link-blue-opa;
   }
 }
 

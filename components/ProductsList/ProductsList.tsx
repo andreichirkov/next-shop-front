@@ -40,7 +40,7 @@ function ProductsList({
           <span>{products.length} товаров</span>
           <div>
             <ProductsView />
-            {/*Сделять сортировку*/}
+            {/*Сделать сортировку*/}
           </div>
         </div>
       )}

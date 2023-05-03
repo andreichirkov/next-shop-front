@@ -1,6 +1,5 @@
 import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
-import Posts from "../components/Posts/Posts"
 import { dehydrate, QueryClient, useQuery } from "react-query"
 import { fetchPosts } from "../api/posts"
 import Error from "../components/Error/Error"
@@ -31,9 +30,13 @@ const getStaticProps = async ctx => {
   }
 }
 
+//На главной странице пока Хардкод, поменяю с нормальным бэком
 const latestProducts: Product[] = [
   {
     id: 1,
+    slug: "slug-1",
+    category: "clothing",
+    subCategory: "tees",
     brand: "Найк 1",
     title: "Футболка 1",
     colors: ["Зеленый", "Красный"],
@@ -51,6 +54,9 @@ const latestProducts: Product[] = [
   },
   {
     id: 2,
+    slug: "slug-2",
+    category: "footwear",
+    subCategory: "sneakers",
     brand: "Найк 2",
     title: "Обувь 2 c очень длинным названием и переносом и еще тут текст",
     colors: ["Белый", "Черный"],
@@ -76,6 +82,9 @@ const latestProducts: Product[] = [
   },
   {
     id: 3,
+    slug: "slug-3",
+    category: "clothing",
+    subCategory: "tees",
     brand: "Найк 3",
     title: "Футболка 3 c очень ",
     colors: ["Белый", "Черный"],
@@ -95,6 +104,9 @@ const latestProducts: Product[] = [
 
   {
     id: 4,
+    slug: "slug-4",
+    category: "clothing",
+    subCategory: "tees",
     brand: "Найк 4",
     title: "Футболка 2 ",
     colors: ["Белый", "Черный"],
@@ -112,6 +124,9 @@ const latestProducts: Product[] = [
   },
   {
     id: 5,
+    slug: "slug-5",
+    category: "clothing",
+    subCategory: "tees",
     brand: "Найк 5",
     title: "Футболка 2 c очень длинным названием и переносом",
     colors: ["Белый", "Черный"],
@@ -129,6 +144,9 @@ const latestProducts: Product[] = [
   },
   {
     id: 6,
+    slug: "slug-2",
+    category: "footwear",
+    subCategory: "sneakers",
     brand: "Найк 6",
     title: "Обувь названием и переносом",
     colors: ["Белый", "Черный"],
@@ -170,7 +188,6 @@ function Index(props) {
           products={latestProducts}
         />
         <ProductsList title="Дроп этого месяца" products={latestProducts} />
-        {/*<Posts />*/}
       </main>
     </>
   )
