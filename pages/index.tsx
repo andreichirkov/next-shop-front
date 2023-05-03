@@ -1,32 +1,14 @@
 import Head from "next/head"
 import { withLayoutMain } from "../layouts/LayoutMain/LayoutMain"
 import { dehydrate, QueryClient, useQuery } from "react-query"
-import { fetchPosts } from "../api/posts"
 import Error from "../components/Error/Error"
 import CoverSlider from "../components/CoverSlider/CoverSlider"
 import { Product } from "../inferfaces/product.interface"
 import ProductsList from "../components/ProductsList/ProductsList"
 
 const getStaticProps = async ctx => {
-  console.log("getStaticProps => ctx =>", ctx)
-  let isError = false
-  const queryClient = new QueryClient()
-
-  try {
-    //В prefetchQuery try catch НЕ РАБОТАЕТ!!!!
-    await queryClient.prefetchQuery(["posts"], fetchPosts)
-  } catch (error) {
-    isError = true
-    // @ts-ignore
-    ctx.res.statusCode = error.response.status
-  }
-
   return {
-    props: {
-      //also passing down isError state to show a custom error component.
-      isError,
-      dehydratedState: dehydrate(queryClient)
-    }
+    props: {}
   }
 }
 

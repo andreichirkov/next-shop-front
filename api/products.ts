@@ -1,6 +1,5 @@
 import { $localDBHost } from "../lib/axios"
 import { Product } from "../inferfaces/product.interface"
-import { number } from "prop-types"
 
 export const fetchProductsByCategory = async (
   category: string
