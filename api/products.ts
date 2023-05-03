@@ -6,7 +6,7 @@ export const fetchProductsByCategory = async (
   category: string
 ): Promise<Product[]> => {
   try {
-    await new Promise(r => setTimeout(r, 1500))
+    await new Promise(_ => setTimeout(_, 1500))
     //Пример: http://localhost:4444/clothing (В url можно не писать baseUrl)
     const { data } = await $localDBHost.get<Product[]>("/api", {
       params: {

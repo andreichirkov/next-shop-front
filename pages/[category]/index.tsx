@@ -35,8 +35,8 @@ export const getServerSideProps: GetServerSideProps<SSRProps> = withCSR(
       await queryClient.fetchQuery({
         queryKey: [category],
         queryFn: () => fetchProductsByCategory(category),
-        // only prefetch if older than 10 minutes
-        staleTime: 600 * 1000
+        // only prefetch if older than 10 seconds
+        staleTime: 10 * 1000
       })
     } catch (axiosErrorMessage) {
       //Желтый цвет
@@ -73,7 +73,7 @@ const CategoryPage = (
   // Если ошибка в базовом запроссе из getServerSideProps или на клиенте
   if (props.isError || isError) return <Error />
   if (isLoading)
-    return <div className="pt-20">withCSR client routing loading...</div>
+    return <div className="pt-20">withCSR client routing loading... {category}...</div>
 
   // Если ошибки нет данные ФЕТЧАСТСЯ на этот запрос и лежат в RQ кэше
   return (
